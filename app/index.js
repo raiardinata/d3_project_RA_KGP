@@ -11,7 +11,6 @@ var div = select("body").append("div")
     .style("opacity", 0);
 
 json("miserables.json").then(function(json) {
-    console.log("test lagi");
     // if (graph) throw graph;
     graph = json;
     update();

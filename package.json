@@ -1,0 +1,29 @@
+{
+  "name": "d3_prototype",
+  "version": "0.0.1",
+  "description": "d3 prototype for bi",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app/index.js",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/raiardinata/d3_project_RA_KGP.git"
+  },
+  "author": "RA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raiardinata/d3_project_RA_KGP/issues"
+  },
+  "homepage": "https://github.com/raiardinata/d3_project_RA_KGP#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "d3": "^5.16.0",
+    "d3-force": "^2.0.1"
+  }
+}
