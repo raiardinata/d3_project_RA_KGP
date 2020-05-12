@@ -3,52 +3,55 @@ import { select, json, scaleOrdinal, forceSimulation, forceManyBody, forceLink, 
 var width = 800;
 var height = 600;
 var color = scaleOrdinal(d3.schemeTableau10);
-var graph;
+var graph, labelLayout, graphLayout, svg, graphChildren, parent;
+
+var label = {
+    'nodes': [],
+    'links': []
+};
 
 // Define the div for the tooltip
-var div = select("body").append("div")	
-    .attr("class", "tooltip")				
+var div = select("body").append("div")
+    .attr("class", "tooltip")
     .style("opacity", 0);
 
-json("miserables.json").then(function(json) {
-    // if (graph) throw graph;
+json("miserables.json").then(function (json) {
     graph = json;
-    update();
-});
 
-function update() {
-
-    // Restart the force layout.
-
-    var label = {
-        'nodes': [],
-        'links': []
-    };
-
-    graph.nodes.forEach(function(d, i) {
-        label.nodes.push({node: d});
-        label.nodes.push({node: d});
+    graph.nodes.forEach(function (d, i) {
+        if (d.children) {
+            
+        }
+        label.nodes.push({ node: d });
+        label.nodes.push({ node: d });
         label.links.push({
             source: i * 2,
             target: i * 2 + 1
         });
     });
 
-    var labelLayout = forceSimulation(label.nodes)
-        .force("charge", forceManyBody().strength(-50))
+    labelLayout = forceSimulation(label.nodes)
+        .force("charge", forceManyBody().strength(0))
+        .force("y", forceY((height / 2) - 15).strength(1))
         .force("link", forceLink(label.links).distance(0).strength(2));
 
-    var graphLayout = forceSimulation(graph.nodes)
+    graphLayout = forceSimulation(graph.nodes)
         .force("charge", forceManyBody().strength(-3000))
         .force("center", forceCenter(width / 2, height / 2))
-        .force("x", forceX(width / 2).strength(1))
+        //.force("x", forceX(width / 2).strength(1))
         .force("y", forceY(height / 2).strength(1))
-        .force("link", forceLink(graph.links).id(function(d) {return d.id; }).distance(50).strength(1))
-        .on("tick", ticked);
+        .force("link", forceLink(graph.links).id(function (d) { return d.id; }).distance(50).strength(1));
+
+    update();
+});
+
+function update() {
+
+    graphLayout.on("tick", ticked);
 
     var adjlist = [];
 
-    graph.links.forEach(function(d) {
+    graph.links.forEach(function (d) {
         adjlist[d.source.index + "-" + d.target.index] = true;
         adjlist[d.target.index + "-" + d.source.index] = true;
     });
@@ -58,13 +61,13 @@ function update() {
     }
 
 
-    var svg = d3.select("#viz").attr("width", width).attr("height", height);
-    var container = svg.append("g");
+    svg = d3.select("#viz").attr("width", width).attr("height", height);
+    var container = svg.append("g").attr("id", "simulationG");
 
     svg.call(
         d3.zoom()
             .scaleExtent([.1, 4])
-            .on("zoom", function() { container.attr("transform", d3.event.transform); })
+            .on("zoom", function () { container.attr("transform", d3.event.transform); })
     );
 
     var link = container.append("g").attr("class", "links")
@@ -73,15 +76,16 @@ function update() {
         .enter()
         .append("line")
         .attr("stroke", "#aaa")
-        .attr("stroke-width", "1px");
+        .attr("stroke-width", "5px");
 
-    var node = container.append("g").attr("class", "nodes")
+    var node = container.append("g")
+        .attr("class", "nodes")
         .selectAll("g")
         .data(graph.nodes)
         .enter()
         .append("circle")
-        .attr("r", 5)
-        .attr("fill", function(d) { return color(d.group); })
+        .attr("r", 10)
+        .attr("fill", function (d) { return color(d.group); })
 
     //node.on("mouseover", focus).on("mouseout", unfocus);
 
@@ -97,19 +101,19 @@ function update() {
         .data(label.nodes)
         .enter()
         .append("text")
-        .text(function(d, i) { return i % 2 == 0 ? "" : d.node.id; })
+        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.id; })
         .style("fill", "#555")
         .style("font-family", "Arial")
         .style("font-size", 12)
         .style("pointer-events", "none"); // to prevent mouseover/drag capture
 
-    node.on("mouseover", function(d) {
-        focus(d);       
-        div .transition()		
-            .duration(200)		
-            .style("opacity", .9);		
-        div .html(d.detail)	
-            .style("left", (d3.event.pageX + 28) + "px")		
+    node.on("mouseover", function (d) {
+        focus(d);
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(`Process Name : ${d.id}\nDetail : ${d.detail}`)
+            .style("left", (d3.event.pageX + 28) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
     })
         .on("mouseout", unfocus)
@@ -121,8 +125,8 @@ function update() {
         link.call(updateLink);
 
         labelLayout.alphaTarget(0.3).restart();
-        labelNode.each(function(d, i) {
-            if(i % 2 == 0) {
+        labelNode.each(function (d, i) {
+            if (i % 2 == 0) {
                 d.x = d.node.x;
                 d.y = d.node.y;
             } else {
@@ -150,13 +154,13 @@ function update() {
 
     function focus(d) {
         var index = d3.select(d3.event.target).datum().index;
-        node.style("opacity", function(o) {
+        node.style("opacity", function (o) {
             return neigh(index, o.index) ? 1 : 0.1;
         });
-        labelNode.attr("display", function(o) {
-        return neigh(index, o.node.index) ? "block": "none";
+        labelNode.attr("display", function (o) {
+            return neigh(index, o.node.index) ? "block" : "none";
         });
-        link.style("opacity", function(o) {
+        link.style("opacity", function (o) {
             return o.source.index == index || o.target.index == index ? 1 : 0.1;
         });
     }
@@ -165,20 +169,20 @@ function update() {
         labelNode.attr("display", "block");
         node.style("opacity", 1);
         link.style("opacity", 1);
-        div.transition()		
-            .duration(500)		
+        div.transition()
+            .duration(500)
             .style("opacity", 0);
     }
 
     function updateLink(link) {
-        link.attr("x1", function(d) { return fixna(d.source.x); })
-            .attr("y1", function(d) { return fixna(d.source.y); })
-            .attr("x2", function(d) { return fixna(d.target.x); })
-            .attr("y2", function(d) { return fixna(d.target.y); });
+        link.attr("x1", function (d) { return fixna(d.source.x); })
+            .attr("y1", function (d) { return fixna(d.source.y); })
+            .attr("x2", function (d) { return fixna(d.target.x); })
+            .attr("y2", function (d) { return fixna(d.target.y); });
     }
 
     function updateNode(node) {
-        node.attr("transform", function(d) {
+        node.attr("transform", function (d) {
             return "translate(" + fixna(d.x) + "," + fixna(d.y) + ")";
         });
     }
@@ -204,5 +208,8 @@ function update() {
 } // end function update
 
 function click() {
-    update();
+    console.log(`Inside update function labellayout value : ${labelLayout} and graphlayout value : ${graphLayout}`);
+    //document.getElementById("simulationG").remove();
+
+    //update();
 }

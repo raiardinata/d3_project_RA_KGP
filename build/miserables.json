@@ -1,14 +1,14 @@
 {
   "nodes": [
-    {"id": "Material A", "group": 1, "detail": ["xyz"]},
+    {"id": "Shipping", "group": 5, "detail": "kyt"},
+    {"id": "Inv. Transfer B", "group": 4, "detail": "ghi"},
+    {"id": "Prod. A", "group": 3, "detail": "fde"},
     {"id": "Inv. Transfer A", "group": 2, "detail": ["kfc"], "parent": "Top Level", "children": [
       {"id": "Inv. Transfer A.1", "group": 2, "parent": "Inv. Transfer A", "children": "null"},
       {"id": "Inv. Transfer A.2", "group": 2, "parent": "Inv. Transfer A", "children": "null"},
       {"id": "Inv. Transfer A.3", "group": 2, "parent": "Inv. Transfer A", "children": "null"}
     ]},
-    {"id": "Prod. A", "group": 3, "detail": "fde"},
-    {"id": "Inv. Transfer B", "group": 4, "detail": "ghi"},
-    {"id": "Shipping", "group": 5, "detail": "kyt"}
+    {"id": "Material A", "group": 1, "detail": ["xyz"]}
   ],
   "links": [
     {"source": "Material A", "target": "Inv. Transfer A", "value": 1},
