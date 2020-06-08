@@ -1,105 +1,193 @@
-var width = 960,
-    height = 500,
-    root;
+// get base url :
+base_url = window.location.origin;
 
-var force = d3.layout.force()
-    .linkDistance(80)
-    .charge(-120)
-    .gravity(.05)
-    .size([width, height])
-    .on("tick", tick);
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-var link = svg.selectAll(".link"),
-    node = svg.selectAll(".node");
-
-d3.json("graph.json", function(error, json) {
-  if (error) throw error;
-
-  root = json;
-  update();
+var data;
+$.ajax({
+  dataType: "json",
+  url: base_url + "/d3_prototype/build/graph.json",
+  async: false,
+  success: function (jsonData) { data = jsonData }
 });
 
+const width = 1000,
+  height = 1000;
+
+let i = 0;
+
+const root = d3.hierarchy(data);
+const transform = d3.zoomIdentity;
+let node, link;
+
+const svg = d3.select("#viz").attr("width", width).attr("height", height)
+  .call(
+    d3
+      .zoom()
+      .scaleExtent([1 / 2, 8])
+      .on("zoom", zoomed)
+  )
+  .append("g")
+  .attr("transform", "translate(40,0)");
+  
+const simulation = d3
+  .forceSimulation()
+  .force(
+    "link",
+    d3.forceLink().id(function (d) {
+      return d.id;
+    })
+  )
+  .force(
+    "charge",
+    d3
+      .forceManyBody()
+      .strength(-3000)
+  )
+  .force("center", d3.forceCenter(width / 2, height / 4))
+  .force("y", d3.forceY(height / 2).strength(1))
+  .on("tick", ticked);
+
 function update() {
-  var nodes = flatten(root),
-      links = d3.layout.tree().links(nodes);
+  const nodes = flatten(root);
+  const links = root.links();
 
-  // Restart the force layout.
-  force
-      .nodes(nodes)
-      .links(links)
-      .start();
-
-  // Update links.
-  link = link.data(links, function(d) { return d.target.id; });
+  link = svg.selectAll(".link").data(links, function (d) {
+    return d.target.id;
+  });
 
   link.exit().remove();
 
-  link.enter().insert("line", ".node")
-      .attr("class", "link");
+  const linkEnter = link
+    .enter()
+    .append("line")
+    .attr("class", "link")
+    .style("stroke", "#000")
+    .style("opacity", "0.2")
+    .style("stroke-width", "5px");
 
-  // Update nodes.
-  node = node.data(nodes, function(d) { return d.id; });
+  link = linkEnter.merge(link);
+
+  node = svg.selectAll(".node").data(nodes, function (d) {
+    return d.id;
+  });
 
   node.exit().remove();
 
-  var nodeEnter = node.enter().append("g")
-      .attr("class", "node")
-      .on("click", click)
-      .call(force.drag);
+  const nodeEnter = node
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("stroke", "#666")
+    .attr("stroke-width", 2)
+    .style("fill", color)
+    .style("opacity", 1)
+    .on("click", clicked)
+    .call(
+      d3
+        .drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
+    );
 
-  nodeEnter.append("circle")
-      .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+  nodeEnter
+    .append("circle")
+    .attr("r", function (d) {
+      return Math.sqrt(d.data.size) / 10 || 4.5;
+    })
+    .style("text-anchor", function (d) {
+      return d.children ? "end" : "start";
+    })
+    .text(function (d) {
+      return d.data.name;
+    });
 
-  nodeEnter.append("text")
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name; });
-
-  node.select("circle")
-      .style("fill", color);
+  node = nodeEnter.merge(node);
+  simulation.nodes(nodes);
+  simulation.force("link").links(links);
 }
 
-function tick() {
-  link.attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
-
-  node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+function sizeContain(num) {
+  num = num > 1000 ? num / 1000 : num / 100;
+  if (num < 4) num = 4;
+  return num;
 }
 
 function color(d) {
-  return d._children ? "#3182bd" // collapsed package
-      : d.children ? "#c6dbef" // expanded package
-      : "#fd8d3c"; // leaf node
+  return d._children
+    ? "#51A1DC" // collapsed package
+    : d.children
+      ? "#51A1DC" // expanded package
+      : "#F94B4C"; // leaf node
 }
 
-// Toggle children on click.
-function click(d) {
-  if (d3.event.defaultPrevented) return; // ignore drag
-  if (d.children) {
-    d._children = d.children;
-    d.children = null;
-  } else {
-    d.children = d._children;
-    d._children = null;
+function radius(d) {
+  return d._children ? 8 : d.children ? 8 : 4;
+}
+
+function ticked() {
+  link
+    .attr("x1", function (d) {
+      return d.source.x;
+    })
+    .attr("y1", function (d) {
+      return d.source.y;
+    })
+    .attr("x2", function (d) {
+      return d.target.x;
+    })
+    .attr("y2", function (d) {
+      return d.target.y;
+    });
+
+  node.attr("transform", function (d) {
+    return `translate(${d.x}, ${d.y})`;
+  });
+}
+
+function clicked(d) {
+  if (!d3.event.defaultPrevented) {
+    if (d.children) {
+      d._children = d.children;
+      d.children = null;
+    } else {
+      d.children = d._children;
+      d._children = null;
+    }
+    update();
   }
-  update();
 }
 
-// Returns a list of all nodes under the root.
-function flatten(root) {
-  var nodes = [], i = 0;
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
 
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
+
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+function flatten(root) {
+  const nodes = [];
   function recurse(node) {
     if (node.children) node.children.forEach(recurse);
     if (!node.id) node.id = ++i;
+    else ++i;
     nodes.push(node);
   }
-
   recurse(root);
   return nodes;
 }
+
+function zoomed() {
+  svg.attr("transform", d3.event.transform);
+}
+
+update();

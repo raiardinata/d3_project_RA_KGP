@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app/index.js",
-    "build": "webpack --watch"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "d3": "^5.16.0",
-    "d3-force": "^2.0.1"
+    "d3-force": "^2.0.1",
+    "jquery": "^3.5.1"
   }
 }

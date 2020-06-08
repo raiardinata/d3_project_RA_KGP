@@ -7,7 +7,7 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: build",
-			"detail": "webpack --watch"
+			"detail": "webpack"
 		}
 	]
 }

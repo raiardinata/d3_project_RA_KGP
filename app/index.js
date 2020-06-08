@@ -1,7 +1,7 @@
 import { select, json, scaleOrdinal, forceSimulation, forceManyBody, forceLink, forceCenter, forceX, forceY } from 'd3';
 
-var width = 800;
-var height = 600;
+var width = $("[id='viz']").width();
+var height = $("[id='viz']").height();
 var color = scaleOrdinal(d3.schemeTableau10);
 var graph, labelLayout, graphLayout, svg, graphChildren, parent;
 
@@ -15,12 +15,12 @@ var div = select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-json("miserables.json").then(function (json) {
+json("../build/miserables.json").then(function (json) {
     graph = json;
 
     graph.nodes.forEach(function (d, i) {
         if (d.children) {
-            
+
         }
         label.nodes.push({ node: d });
         label.nodes.push({ node: d });
@@ -31,8 +31,8 @@ json("miserables.json").then(function (json) {
     });
 
     labelLayout = forceSimulation(label.nodes)
-        .force("charge", forceManyBody().strength(0))
-        .force("y", forceY((height / 2) - 15).strength(1))
+        .force("charge", forceManyBody().strength(-50))
+        //.force("y", forceY((height / 2) - 15).strength(1))
         .force("link", forceLink(label.links).distance(0).strength(2));
 
     graphLayout = forceSimulation(graph.nodes)
@@ -61,7 +61,7 @@ function update() {
     }
 
 
-    svg = d3.select("#viz").attr("width", width).attr("height", height);
+    svg = d3.select("#viz");
     var container = svg.append("g").attr("id", "simulationG");
 
     svg.call(
