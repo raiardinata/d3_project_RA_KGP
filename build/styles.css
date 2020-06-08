@@ -25,31 +25,25 @@ svg {
   padding: 10px;
 }
 
-.home_label {
-  position: absolute;
-  top: 15%;
-  color: #000;
-  background-color: rgba(255, 255, 255, 1);
-  display: table;
+.header-label {
+  color: white;
   font-family: "GalanoGrotesqueW00-Bold", "MarkPro-Heavy", "Pangram-ExtraBold", "SFUIDisplay-Heavy", "ProximaNova-Extrabld", "AvenirNext-Bold", "Wavehaus-158ExtraBold", "Sailec-Bold", "Europa-Bold", "Roboto-Black", "Affogato-Bold", Arial, sans-serif;
-  font-size: 4em;
+  font-size: 1em;
   font-weight: 800;
-  line-height: 1.2;
-  text-align: left;
-  margin: 0;
-  padding: .2em .2em;
-  transform: translateY(-53%);
-  font-display: swap;
-  border: rgb(0, 0, 0);
-  border-left-width: 20px;
-  border-left-style: dashed;
+}
+
+.logoutLblPos{
+  position:fixed;
+  top: 4.5%;
+  right: 1%;
 }
 
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #24292e;
   padding: 20px 10px;
+  width: 100%;
 }
 
 /* Style the header links */

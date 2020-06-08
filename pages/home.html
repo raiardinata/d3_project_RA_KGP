@@ -34,8 +34,22 @@
 </head>
 
 <body>
+    <div class="header">
+        <label class="header-label">Traceability System - Home</label>
+        <g style="right: 2%; font-size: 1em; color: white; position: fixed;">
+            <label class="header-label">Admin | </label>
+            <form name="logoutform" method="post" action="../app/log_out.php" style="display: inline;">
+                <label>
+                    <input class="header-label" name="logoutBtn" type="submit" id="logoutBtn" value="Sign Out" style="background-color: #24292e;
+                        border: none;
+                        color: rgba(255, 67, 54, 1);
+                        text-decoration: none;
+                        cursor: pointer;">
+                </label>
+            </form>
+        </g>
 
-    <label class="home_label">Traceability <br />System - Home</label>
+    </div>
 
     <div class="links">
         <ul class="links__list" style="--item-total:5">
