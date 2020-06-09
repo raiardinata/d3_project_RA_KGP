@@ -20,7 +20,10 @@
               ";
     $res1 	= mysqli_query($conn, $query1);
     if(mysqli_num_rows($res1) > 0){
-        $retVal =   true;
+		$checkID			=   true;
+		$myObj->checkID		=	$checkID;
+		$myObj->username	=	$username_val;
+		$retVal 			= 	json_encode($myObj);
     }
 	
 	echo $retVal;

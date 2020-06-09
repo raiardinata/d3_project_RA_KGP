@@ -2,7 +2,6 @@
 (function ($) {
     "use strict";
 
-
     /*==================================================================
     [ Focus input ]*/
     $('.input100').each(function () {
@@ -37,6 +36,7 @@
                 password: password
             },
             success: function (jsonData) {
+                var jsonData = JSON.parse(jsonData);
                 var check = true;
 
                 for (var i = 0; i < input.length; i++) {
@@ -45,9 +45,10 @@
                         check = false;
                     }
                 }
-                if (jsonData == true) {
+                if (jsonData.checkID == true) {
                     // Simulate an HTTP redirect:
-                    window.location.replace(base_url + "/d3_prototype/pages/home.html");
+                    sessionStorage.setItem("username", jsonData.username);
+                    window.location.replace(base_url + "/d3_prototype/pages/home.php");
                 }
                 else {
                     alert('Wrong username and password!');
