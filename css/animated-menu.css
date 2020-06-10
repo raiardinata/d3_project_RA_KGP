@@ -32,7 +32,7 @@
     width: 100px;
     min-height: 100px;
     position: absolute;
-    top: 55%;
+    top: 50%;
     right: 20%;
   }
   
@@ -50,7 +50,7 @@
     margin-top: calc(var(--link-size)/-2);
     margin-left: calc(var(--link-size)/-2);
     --angle: calc(360deg/var(--item-total));
-    --rotation: calc(140deg + var(--angle)*var(--item-count));
+    --rotation: calc(125deg + var(--angle)*var(--item-count));
     transform: rotate(var(--rotation)) translate(calc(var(--link-size) + var(--base-grid)*2)) rotate(calc(var(--rotation)*-1));
   }
   

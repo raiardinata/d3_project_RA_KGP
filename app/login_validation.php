@@ -24,7 +24,13 @@
 		$myObj->checkID		=	$checkID;
 		$myObj->username	=	$username_val;
 		$retVal 			= 	json_encode($myObj);
-    }
+	}
+	else{
+		$checkID			=   false;
+		$myObj->checkID		=	$checkID;
+		$myObj->username	=	$username_val;
+		$retVal 			= 	json_encode($myObj);
+	}
 	
 	echo $retVal;
 	

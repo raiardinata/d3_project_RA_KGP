@@ -27,7 +27,7 @@
 
         e.preventDefault();
         $.ajax({
-            url: base_url + "KGP_Test/d3_prototype/app/login_validation.php",
+            url: base_url + "/KGP_Test/d3_prototype/app/login_validation.php",
             async: false,
             type: 'post',
             dataType: 'text',
@@ -36,6 +36,7 @@
                 password: password
             },
             success: function (jsonData) {
+                debugger;
                 var jsonData = JSON.parse(jsonData);
                 var check = true;
 
@@ -48,7 +49,7 @@
                 if (jsonData.checkID == true) {
                     // Simulate an HTTP redirect:
                     sessionStorage.setItem("username", jsonData.username);
-                    window.location.replace(base_url + "/d3_prototype/pages/home.php");
+                    window.location.replace(base_url + "/KGP_Test/d3_prototype/pages/home.php");
                 }
                 else {
                     alert('Wrong username and password!');

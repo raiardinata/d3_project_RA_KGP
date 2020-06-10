@@ -33,18 +33,25 @@
     <script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
     <script>
         $(document).ready(function(){
+            var base_url = window.origin;
             document.getElementById("username").innerHTML = sessionStorage.getItem("username") + " | ";
+
+            $('#logoutform').submit(function (e) {
+                localStorage.clear();
+                window.location.replace(base_url + "/d3_prototype/pages/home.php");
+            });
         });        
     </script>
+    <!--===============================================================================================-->
 
 </head>
 
 <body>
     <div class="header">
         <label class="header-label" style="display: inline;">Traceability System - Home</label>
-        <g style="right: 2%; font-size: 1em; color: white; position: fixed;">
+        <g style="right: 2%; font-size: 1em; color: white; position: absolute;">
             <label class="header-label" style="display: inline;" id="username"></label>
-            <form name="logoutform" method="post" action="../app/log_out.php" style="display: inline;">
+            <form id="logoutform" method="post" action=".." style="display: inline;">
                 <label style="display: inline;">
                     <input class="header-label" name="logoutBtn" type="submit" id="logoutBtn" value="Sign Out"
                         style="background-color: #24292e;
