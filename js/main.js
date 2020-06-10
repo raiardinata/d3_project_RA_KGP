@@ -27,7 +27,7 @@
 
         e.preventDefault();
         $.ajax({
-            url: base_url + "/d3_prototype/app/login_validation.php",
+            url: base_url + "KGP_Test/d3_prototype/app/login_validation.php",
             async: false,
             type: 'post',
             dataType: 'text',

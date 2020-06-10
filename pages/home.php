@@ -58,6 +58,9 @@
 
     </div>
 
+    <div class="barbershop-pole">
+    </div>
+
     <div class="links">
         <ul class="links__list" style="--item-total:5">
             <li class="links__item" style="--item-count:1">
