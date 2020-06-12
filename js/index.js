@@ -15,7 +15,7 @@ var div = select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-json("../build/miserables.json").then(function (json) {
+json("../json/miserables.json").then(function (json) {
     graph = json;
 
     graph.nodes.forEach(function (d, i) {

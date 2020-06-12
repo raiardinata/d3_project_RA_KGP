@@ -6,7 +6,8 @@
     $password_val 	= $_POST['password'];
 	// $username_val 	= "admin";
     // $password_val 	= "admin";
-    $retVal     = false;
+	$retVal     = false;
+	$myObj 		= new \stdClass();
 	
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
