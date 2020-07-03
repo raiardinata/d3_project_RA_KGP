@@ -7,15 +7,20 @@
     {"id": "Inv. Transfer A.1", "group": 2, "detail": ["kfc"]},
     {"id": "Inv. Transfer A.2", "group": 2, "detail": ["kfc"]},
     {"id": "Inv. Transfer A.3", "group": 2, "detail": ["kfc"]},
-    {"id": "Material A", "group": 1, "detail": ["xyz"]}
+    {"id": "Material A", "group": 1, "detail": ["xyz"]},
+    {"id": "Inv. Transfer Z", "group": 2, "detail": ["xyz"]},
+    {"id": "Material B", "group": 1, "detail": ["xyz"]}
   ],
   "links": [
     {"source": "Material A", "target": "Inv. Transfer A", "value": 1},
-    {"source": "Inv. Transfer A", "target": "Prod. A", "value": 1},
+    {"source": "Inv. Transfer A", "target": "Inv. Transfer A.1", "value": 1},
+    {"source": "Inv. Transfer A", "target": "Inv. Transfer A.2", "value": 1},
+    {"source": "Inv. Transfer A", "target": "Inv. Transfer A.3", "value": 1},
     {"source": "Prod. A", "target": "Inv. Transfer B", "value": 1},
     {"source": "Inv. Transfer B", "target": "Shipping", "value": 1},
-    {"source": "Inv. Transfer A.1", "target": "Inv. Transfer A", "value": 1},
-    {"source": "Inv. Transfer A.2", "target": "Inv. Transfer A", "value": 1},
-    {"source": "Inv. Transfer A.3", "target": "Inv. Transfer A", "value": 1}
+    {"source": "Inv. Transfer A.1", "target": "Prod. A", "value": 1},
+    {"source": "Inv. Transfer A.2", "target": "Prod. A", "value": 1},
+    {"source": "Inv. Transfer A.3", "target": "Prod. A", "value": 1},
+    {"source": "Material B", "target": "Inv. Transfer Z", "value": 1}
   ]
 }

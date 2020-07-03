@@ -27,8 +27,7 @@
   <link rel="stylesheet" type="text/css" href="../css/util.css">
   <link rel="stylesheet" type="text/css" href="../css/main.css">
   <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../css/styles.css">
-  <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
+  <link rel="stylesheet" type="text/css" href="../css/accessible_menu.css">
   <!--===============================================================================================-->
   <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><!-- Load icon library -->
@@ -39,40 +38,97 @@
         var base_url = window.origin;
         document.getElementById("username").innerHTML = sessionStorage.getItem("username") + " | ";
 
-        $('#logoutform').submit(function (e) {
+        $('#signout').click(function (e) {
             localStorage.clear();
-            window.location.replace(base_url + "KGP_Test/d3_prototype/pages/home.php");
+            window.location.replace(base_url + "/KGP_Test/d3_prototype/");
         });
     });        
   </script>
 </head>
 
 <body>
-  <div class="header">
-    <label class="header-label" style="display: inline;">Traceability System - D3</label>
-    <g style="right: 2%; font-size: 1em; color: white; position: absolute;">
-        <label class="header-label" style="display: inline;" id="username"></label>
-        <form id="logoutform" method="post" action=".." style="display: inline;">
-            <label style="display: inline;">
-                <input class="header-label" name="logoutBtn" type="submit" id="logoutBtn" value="Sign Out"
-                    style="background-color: #24292e;
-                    border: none;
-                    color: rgba(255, 67, 54, 1);
-                    text-decoration: none;
-                    cursor: pointer;">
-            </label>
-        </form>
-    </g>
-  </div>
-  <div id="filter" class="filterPanel">
-    <form>
-      <label class="labelStyle">Product</label>
-      <input type="text" id="1" placeholder="Product" />
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-  </div>
-  <svg id="viz"></svg>
-  <script src="../js/d3_force.js"></script>
+  <!-- accessible menu -->
+  <div class="viewport">
+        <header class="header" role="banner">
+            <label class="header-label" style="display: inline;">Traceability System - Home</label>
+            <label class="header-user" style="display: inline;" id="username"></label>
+            <nav id="nav" class="nav" role="navigation">
+
+                <!-- ACTUAL NAVIGATION MENU -->
+                <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
+                    <li class="nav__item"><a href="home.php" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="trace.php" class="nav__link">Traceability</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link">Contact</a></li>
+                    <li class="nav__item"><a href="#" class="nav__link" style="color: red;" id="signout">Sign out</a></li>
+                </ul>
+
+                <!-- MENU TOGGLE BUTTON -->
+                <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
+                    <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+                        <title>Toggle Menu</title>
+                        <g>
+                            <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
+                            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+                            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+                            <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
+                            <circle class="menuicon__circle" r="23" cx="25" cy="25" />
+                        </g>
+                    </svg>
+                </a>
+
+                <!-- ANIMATED BACKGROUND ELEMENT -->
+                <div class="splash"></div>
+
+            </nav>
+        </header>
+      <svg id="viz" width="100%" height="550px"></svg>
+      <script src="../js/bundle.js"></script>
+    </div>
+    
+    <script>
+        let nav = document.querySelector('#nav');
+        let menu = document.querySelector('#menu');
+        let menuToggle = document.querySelector('.nav__toggle');
+        let isMenuOpen = false;
+
+
+        // TOGGLE MENU ACTIVE STATE
+        menuToggle.addEventListener('click', e => {
+            e.preventDefault();
+            isMenuOpen = !isMenuOpen;
+
+            // toggle a11y attributes and active class
+            menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
+            menu.hidden = !isMenuOpen;
+            nav.classList.toggle('nav--open');
+        });
+
+
+        // TRAP TAB INSIDE NAV WHEN OPEN
+        nav.addEventListener('keydown', e => {
+            // abort if menu isn't open or modifier keys are pressed
+            if (!isMenuOpen || e.ctrlKey || e.metaKey || e.altKey) {
+                return;
+            }
+
+            // listen for tab press and move focus
+            // if we're on either end of the navigation
+            let menuLinks = menu.querySelectorAll('.nav__link');
+            if (e.keyCode === 9) {
+                if (e.shiftKey) {
+                    if (document.activeElement === menuLinks[0]) {
+                        menuToggle.focus();
+                        e.preventDefault();
+                    }
+                } else if (document.activeElement === menuToggle) {
+                    menuLinks[0].focus();
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

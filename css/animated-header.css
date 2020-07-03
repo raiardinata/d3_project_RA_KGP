@@ -1,12 +1,3 @@
-html, body, a {
-	width: 100%;
-	height: 100%;
-}
-
-body {
-	margin: 0;
-}
-
 @font-face {
 	font-family: "GalanoGrotesqueW00-Bold";
 	src: url("https://static2.pickjb.com/assets/fonts/GalanoGrotesqueW00-Bold.eot");

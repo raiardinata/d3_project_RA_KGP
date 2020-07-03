@@ -3,9 +3,8 @@
 	include "db_conn.php";
 	
 	$username_val 	= $_POST['username'];
-    $password_val 	= $_POST['password'];
-	// $username_val 	= "admin";
-    // $password_val 	= "admin";
+	$password_val 	= $_POST['password'];
+	
 	$retVal     = false;
 	$myObj 		= new \stdClass();
 	
