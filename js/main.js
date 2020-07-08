@@ -49,7 +49,7 @@
                 if (jsonData.checkID == true) {
                     // Simulate an HTTP redirect:
                     sessionStorage.setItem("username", jsonData.username);
-                    window.location.replace(base_url + "/KGP_Test/d3_prototype/pages/home.php");
+                    window.location.replace(base_url + "/KGP_Test/d3_prototype/pages/define_device_type.php");
                 }
                 else {
                     alert('Wrong username and password!');

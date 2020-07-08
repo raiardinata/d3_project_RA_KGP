@@ -1,8 +1,12 @@
 :root {
-	 --screen-width: 100vw;
-	 --screen-height: 48vw;
+	 --screen-width: 1280px;
+	 --screen-height: 720px;
 	 --header-bg-color: #24292e;
 	 --splash-bg-color: #368887;
+}
+.header {
+	height: 13vh;
+	background-color: var(--header-bg-color);
 }
 .header-label {
     color: white;
@@ -36,8 +40,8 @@ ul  {
 	 border: 0;
 	 background: transparent;
 	 outline: 0;
-	 right: 15px;
-	 top: 15px;
+	 right: 1.5vmax;
+	 top: 1.1vmax;
 	 cursor: pointer;
 	 border-radius: 50%;
 	 transition: background-color 0.15s linear;
@@ -167,16 +171,14 @@ ul  {
 	 justify-content: center;
 } */
  .viewport {
-	 width: var(--screen-width);
-	 height: var(--screen-height);
+	 width: auto;
+     height: auto;
+     min-height: 100vh;
+     min-width: 100vw;
 	 margin: 0 auto;
 	 position: relative;
 	 overflow: hidden;
 	 background-color: white;
-}
- .header {
-	 height: 13vh;
-	 background-color: var(--header-bg-color);
 }
  .main {
 	 padding: 20px;

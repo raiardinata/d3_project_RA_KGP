@@ -1,5 +1,5 @@
 :root {
-    --base-grid: 1vh;
+    --base-grid: 0.5vmax;
     --colour-white: #fff;
     --colour-black: #1a1a1a;
   }
@@ -9,13 +9,13 @@
   }
   
   .links {
-    --link-size: calc(var(--base-grid)*20);
+    /* --link-size: calc(var(--base-grid)*20); */
     color: var(--colour-black);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 60vw;
+    width: 600px;
     height: 500px;
     min-height: 100px;
     position: absolute;
@@ -29,8 +29,8 @@
     width: var(--link-size);
     height: var(--link-size);
     position: absolute;
-    top: 50%;
-    left: 35%;
+    top: 22vmax;
+    left: 22vmax;
     --angle: calc(360deg/var(--item-total));
     --rotation: calc(125deg + var(--angle)*var(--item-count));
     /* transform: rotate(var(--rotation)) translate(calc(var(--link-size) + var(--base-grid)*2)) rotate(calc(var(--rotation)*-1)); */
@@ -84,8 +84,8 @@
     display: block;
     border-radius: 50%;
     position: absolute;
-    top: -3%;
-    left: -3%;
+    top: -4%;
+    left: -4%;
     transition: all .3s cubic-bezier(.53,-.67,.73,.74);
     transform: none;
     opacity: 0;
@@ -131,50 +131,3 @@
       transform: scale(1) translateY(calc(var(--base-grid)*5));
     }
   }
-
-  /* ol.even {
-    position: absolute;
-    left: 5.45455rem;
-  }
-  
-  ol.odd {
-    position: relative;
-    margin-bottom: -3.3em;
-  }
-  
-  .hex {
-    position: relative;
-    margin: 1em auto;
-    width: 94px;
-    height: 10.2rem;
-    background: #1e2530;
-    transform: rotate(-90deg);
-    display: inline-block;
-    list-style-type: none;
-    margin-right: 4.61538rem;
-    transition: all 150ms ease-in-out;
-    z-index: 2;
-  }
-  
-  .hex:before, .hex:after {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
-    background: inherit;
-    content: '';
-    z-index: -1;
-  }
-  
-  .hex:before {
-    transform: rotate(60deg);
-  }
-  
-  .hex:after {
-    transform: rotate(-60deg);
-  }
-  
-  .hex:hover {
-    background: #ea7432;
-    cursor: pointer;
-  } */
