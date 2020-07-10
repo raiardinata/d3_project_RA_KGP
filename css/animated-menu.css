@@ -1,7 +1,7 @@
 :root {
     --base-grid: 0.5vmax;
     --colour-white: #fff;
-    --colour-black: #1a1a1a;
+    --colour-black: #5f5f5f;
   }
   
   *, :after, :before {
@@ -52,6 +52,11 @@
     align-items: center;
     text-decoration: none;
     color: inherit;
+    transition: all 0.4s;
+  }
+  .links__link:hover {
+    text-decoration: none;
+    color: #fff;
   }
   
   .links__icon {

@@ -1,134 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Traceability System - D3</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--===============================================================================================-->
-  <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/animsition/css/animsition.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../vendor/daterangepicker/daterangepicker.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../css/util.css">
-  <link rel="stylesheet" type="text/css" href="../css/main.css">
-  <!--===============================================================================================-->
-  <link rel="stylesheet" type="text/css" href="../css/accessible_menu.css">
-  <!--===============================================================================================-->
-  <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><!-- Load icon library -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!--===============================================================================================-->
-  <script>
-    $(document).ready(function(){
-        var base_url = window.origin;
-        document.getElementById("username").innerHTML = sessionStorage.getItem("username") + " | ";
+    <title>Traceability System Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <!--===============================================================================================-->
+    <script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function(){
+            var base_url = window.origin;
+            document.getElementById("username").innerHTML = "Hello, " + sessionStorage.getItem("username");
 
-        $('#signout').click(function (e) {
-            localStorage.clear();
-            window.location.replace(base_url + "/KGP_Test/d3_prototype/");
-        });
-    });        
-  </script>
+            $('#signout').click(function (e) {
+                localStorage.clear();
+                window.location.replace(base_url + "/KGP_Test/d3_prototype/");
+            });
+        });        
+    </script>
+    <!--===============================================================================================-->
+    <style>
+        .flex-container {
+            --link-size: calc(var(--base-grid)*20);
+            color: var(--colour-black);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            flex-shrink: 3;
+            flex-basis: auto;
+            justify-content: center;
+            position: relative;
+            width: auto;
+            min-width: 100%;
+            align-items: center;
+            align-content: center;
+        }
+        .flex-container > div {
+            /* background-color: #f1f1f1; */
+            width: var(--link-size);
+            height: var(--link-size);
+            margin: 5px 7px;
+        }
+    </style>
 </head>
 
-<body>
-  <!-- accessible menu -->
-  <div class="viewport">
-        <header class="header" role="banner">
-            <label class="header-label" style="display: inline;">Traceability System - Home</label>
-            <label class="header-user" style="display: inline;" id="username"></label>
-            <nav id="nav" class="nav" role="navigation">
-
-                <!-- ACTUAL NAVIGATION MENU -->
-                <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
-                    <li class="nav__item"><a href="home.php" class="nav__link">Home</a></li>
-                    <li class="nav__item"><a href="trace.php" class="nav__link">Traceability</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link">Blog</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link">About</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link">Contact</a></li>
-                    <li class="nav__item"><a href="#" class="nav__link" style="color: red;" id="signout">Sign out</a></li>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #0288d1; position: relative;">
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="color: #0288d1;">Traceability System</a>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><label class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" id="username" style="padding: 16px; color: #ffeb3b;"></label>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="home.php" style="color: #0288d1;">Home</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="trace.php" style="color: #0288d1;">Traceability</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" style="color: red;" id="signout">Sign Out</a>
+                    </li>
                 </ul>
-
-                <!-- MENU TOGGLE BUTTON -->
-                <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
-                    <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
-                        <title>Toggle Menu</title>
-                        <g>
-                            <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
-                            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
-                            <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
-                            <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
-                            <circle class="menuicon__circle" r="23" cx="25" cy="25" />
-                        </g>
-                    </svg>
-                </a>
-
-                <!-- ANIMATED BACKGROUND ELEMENT -->
-                <div class="splash"></div>
-
-            </nav>
-        </header>
-      <svg id="viz" width="100%" height="550px"></svg>
-      <script src="../js/bundle.js"></script>
-    </div>
-    
-    <script>
-        let nav = document.querySelector('#nav');
-        let menu = document.querySelector('#menu');
-        let menuToggle = document.querySelector('.nav__toggle');
-        let isMenuOpen = false;
+            </div>
+        </div>
+    </nav>
 
 
-        // TOGGLE MENU ACTIVE STATE
-        menuToggle.addEventListener('click', e => {
-            e.preventDefault();
-            isMenuOpen = !isMenuOpen;
+    <header class="masthead bg-primary text-white text-center" style="background-color: white; padding: 0px">
+        <div style="width: 100%; height: 200px;">
+            <h4 class="mb-4" style="color: #5f5f5f;">Filter</h4>
+            <table width="100%" height="60%">
+                <tr>
+                    <td>
+                        <label type="text" id="lblMaterialcode" name="fname" placeholder="Material Code" style="width: 150px; color: #5f5f5f;">Material Code</label>
+                        <label type="text" id="lblBatch" name="fname" placeholder="Batch" style="width: 150px; color: #5f5f5f;">Batch</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" style="width: 150px;">
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </header>
 
-            // toggle a11y attributes and active class
-            menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
-            menu.hidden = !isMenuOpen;
-            nav.classList.toggle('nav--open');
-        });
+    <section>
+        <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
+            <div class="row">
+                <!-- Detail panel-->
+                <div class="col-lg-4 mb-5 mb-lg-0" style="border: solid; border-color: #0288d1; flex:0 0 100%; max-width: 100%; height: 300px;">
+                    <h4 class="mb-4">Detail Panel</h4>
+                    <p class="pre-wrap lead mb-0">Detail data panel for each node will be put on this panel.</p>
+                </div>
+                <!-- Trace-->
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%;">
+                    <svg id="viz" width="100%" height="700px"></svg>
+                    <script src="../js/bundle.js"></script>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">SUPPORT</h4>
+                    <p class="pre-wrap lead mb-0">DKI Jakarta, Jakarta Timur, <?php echo "\n";?>Mobile: 080989999</p>
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-facebook-f"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-dribbble"></i></a>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="mb-4">ABOUT TRACEABILITY</h4>
+                    <p class="pre-wrap lead mb-0">Traceability System is tracking system solution for your real time guidance.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-        // TRAP TAB INSIDE NAV WHEN OPEN
-        nav.addEventListener('keydown', e => {
-            // abort if menu isn't open or modifier keys are pressed
-            if (!isMenuOpen || e.ctrlKey || e.metaKey || e.altKey) {
-                return;
-            }
-
-            // listen for tab press and move focus
-            // if we're on either end of the navigation
-            let menuLinks = menu.querySelectorAll('.nav__link');
-            if (e.keyCode === 9) {
-                if (e.shiftKey) {
-                    if (document.activeElement === menuLinks[0]) {
-                        menuToggle.focus();
-                        e.preventDefault();
-                    }
-                } else if (document.activeElement === menuToggle) {
-                    menuLinks[0].focus();
-                    e.preventDefault();
-                }
-            }
-        });
-    </script>
+    <!-- Copyright Section-->
+    <section class="copyright py-4 text-center text-white">
+        <div class="container"><small class="pre-wrap" style="font-weight: bold;">Copyright © Traceability System 2020</small></div>
+    </section>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+    <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Contact form JS-->
+    <script src="../assets/mail/jqBootstrapValidation.js"></script>
+    <script src="../assets/mail/contact_me.js"></script>
+    <!-- Core theme JS-->
+    <script src="../js/scripts.js"></script>
 </body>
 
 </html>
