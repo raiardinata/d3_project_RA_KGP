@@ -36,11 +36,11 @@ function generate_simulation() {
             .force("link", d3.forceLink(label.links).distance(2).strength(2));
 
         var graphLayout = d3.forceSimulation(graph.nodes)
-            .force("charge", d3.forceManyBody().strength(-3000).distanceMax(400).distanceMin(80))
+            .force("charge", d3.forceManyBody().strength(-300).distanceMax(400).distanceMin(80))
             .force("center", d3.forceCenter(width / 2, height / 2))
             // .force("x", d3.forceX(width / 2))
             .force("y", d3.forceY(height / 2))
-            .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(50).strength(1))
+            .force("link", d3.forceLink(graph.links).id(function (d) { return d.detail; }).distance(50).strength(1))
             .on("tick", ticked);
 
         var adjlist = [];
