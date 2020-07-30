@@ -8,23 +8,30 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="../js/all.min.js" crossorigin="anonymous"></script>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <!--===============================================================================================-->
     <script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+    <script src="../js/d3_v5.js" charset="utf-8"></script>
     <script>
         $(document).ready(function(){
             var base_url = window.origin;
             document.getElementById("username").innerHTML = "Hello, " + sessionStorage.getItem("username");
 
             $('#signout').click(function (e) {
-                localStorage.clear();
+                sessionStorage.clear();
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
-        });        
+
+            // $('#btnSearch').click(function(){
+            //     if(!$('#inputMaterialcode').val() || !$('#inputBatch').val() )
+            //         alert('TEST!');
+            //     else
+            //         alert('Something on the field');
+            // });
+        });
     </script>
     <!--===============================================================================================-->
     <style>
@@ -49,6 +56,25 @@
             height: var(--link-size);
             margin: 5px 7px;
         }
+
+
+svg {
+  width: 100%;
+  height: 700px;
+}
+
+
+
+.node {
+  pointer-events: all;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+
+.node text {
+  font: 8px sans-serif;
+}
     </style>
 </head>
 
@@ -73,20 +99,14 @@
 
 
     <header class="masthead bg-primary text-white text-center" style="background-color: white; padding: 0px">
-        <div style="width: 100%; height: 200px;">
-            <h4 class="mb-4" style="color: #5f5f5f;">Filter</h4>
-            <table width="100%" height="60%">
+        <div style="width: 100%; height: 100px;">
+            <h4 class="mb-4" style="color: #5f5f5f;">Search Criteria</h4>
+            <table width="100%" height="20%">
                 <tr>
                     <td>
-                        <label type="text" id="lblMaterialcode" name="fname" placeholder="Material Code" style="width: 150px; color: #5f5f5f;">Material Code</label>
-                        <label type="text" id="lblBatch" name="fname" placeholder="Batch" style="width: 150px; color: #5f5f5f;">Batch</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" style="width: 150px;">
-                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="20191003" style="width: 150px;">
+                        <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>
             </table>
@@ -97,14 +117,15 @@
         <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
             <div class="row">
                 <!-- Detail panel-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="border: solid; border-color: #0288d1; flex:0 0 100%; max-width: 100%; height: 300px;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1;">
                     <h4 class="mb-4">Detail Panel</h4>
                     <p class="pre-wrap lead mb-0">Detail data panel for each node will be put on this panel.</p>
+                    <textarea id="txtDetailArea" style="margin-top: 0px;margin-bottom: 0px;height: 500px;width: 100%;"></textarea>
                 </div>
                 <!-- Trace-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 66%;max-width: 66%;">
                     <svg id="viz" width="100%" height="700px"></svg>
-                    <script src="../js/bundle.js"></script>
+                    <script src="../js/index.js"></script>
                 </div>
             </div>
         </div>
@@ -116,7 +137,7 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">SUPPORT</h4>
-                    <p class="pre-wrap lead mb-0">DKI Jakarta, Jakarta Timur, <?php echo "\n";?>Mobile: 080989999</p>
+                    <p class="pre-wrap lead mb-0">DKI Jakarta, Jakarta Timur, <?php echo "\n"; ?>Mobile: 080989999</p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
@@ -138,10 +159,10 @@
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
     <!-- Bootstrap core JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../js/jquery.easing.min.js"></script>
     <!-- Contact form JS-->
     <script src="../assets/mail/jqBootstrapValidation.js"></script>
     <script src="../assets/mail/contact_me.js"></script>

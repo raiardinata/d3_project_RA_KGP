@@ -36,7 +36,6 @@
                 password: password
             },
             success: function (jsonData) {
-                debugger;
                 var jsonData = JSON.parse(jsonData);
                 var check = true;
 

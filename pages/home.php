@@ -20,7 +20,7 @@
             document.getElementById("username").innerHTML = "Hello, " + sessionStorage.getItem("username");
 
             $('#signout').click(function (e) {
-                localStorage.clear();
+                sessionStorage.clear();
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
         });        

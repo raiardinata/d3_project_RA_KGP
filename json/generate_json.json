@@ -1,0 +1,45 @@
+{
+    "nodes": [
+        {
+            "id": "100-121001055-20191003-Garam Samudra",
+            "group": "100",
+            "detail": "29440ef2-c804-11ea-85a3-bcee7b513d25",
+            "description": "Inbound"
+        },
+        {
+            "id": "200-121001055-20191003-Garam Samudra",
+            "group": "200",
+            "detail": "29458d12-c804-11ea-85a3-bcee7b513d25",
+            "description": "Transfer"
+        },
+        {
+            "id": "300-211000010-20191010-SFG MSK Bulk",
+            "group": "300",
+            "detail": "29458f8d-c804-11ea-85a3-bcee7b513d25",
+            "description": "Produksi"
+        },
+        {
+            "id": "300-124000814-20191011-250MA C (1 x 48) 250 g",
+            "group": "300",
+            "detail": "2945944f-c804-11ea-85a3-bcee7b513d25",
+            "description": "Produksi"
+        }
+    ],
+    "links": [
+        {
+            "source": "100-121001055-20191003-Garam Samudra",
+            "target": "200-121001055-20191003-Garam Samudra",
+            "value": 0
+        },
+        {
+            "source": "200-121001055-20191003-Garam Samudra",
+            "target": "300-211000010-20191010-SFG MSK Bulk",
+            "value": 1
+        },
+        {
+            "source": "300-211000010-20191010-SFG MSK Bulk",
+            "target": "300-124000814-20191011-250MA C (1 x 48) 250 g",
+            "value": 2
+        }
+    ]
+}
