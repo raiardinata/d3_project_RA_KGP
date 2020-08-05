@@ -1,0 +1,89 @@
+{
+    "nodes": [
+        {
+            "id": "100-121001055-20191003-Garam Samudra",
+            "group": "100",
+            "detail": "128edbc7-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Inbound"
+        },
+        {
+            "id": "200-121001055-20191003-Garam Samudra",
+            "group": "200",
+            "detail": "1367f825-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Transfer"
+        },
+        {
+            "id": "200-121001055-20191003-Garam Samudra",
+            "group": "200",
+            "detail": "12b62d32-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Transfer"
+        },
+        {
+            "id": "300-211000011-20200803-SFG 211000011",
+            "group": "300",
+            "detail": "13f311d3-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Produksi"
+        },
+        {
+            "id": "300-211000010-20191010-SFG MSG\/Masako Bulk",
+            "group": "300",
+            "detail": "12cae258-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Produksi"
+        },
+        {
+            "id": "300-124000714-20191011-250MA C (1 x 48) 250 g",
+            "group": "300",
+            "detail": "13009a8b-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Produksi"
+        },
+        {
+            "id": "400-124000714-20191011-250MA C (1 x 48) 250 g",
+            "group": "400",
+            "detail": "131efad9-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Outbound"
+        },
+        {
+            "id": "400-124000714-20191011-250MA C (1 x 48) 250 g",
+            "group": "400",
+            "detail": "132affa0-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Outbound"
+        }
+    ],
+    "links": [
+        {
+            "source": "128edbc7-d622-11ea-8b0a-bcee7b513d25",
+            "target": "1367f825-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "128edbc7-d622-11ea-8b0a-bcee7b513d25",
+            "target": "12b62d32-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "1367f825-d622-11ea-8b0a-bcee7b513d25",
+            "target": "13f311d3-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "12b62d32-d622-11ea-8b0a-bcee7b513d25",
+            "target": "12cae258-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "12cae258-d622-11ea-8b0a-bcee7b513d25",
+            "target": "13009a8b-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "13009a8b-d622-11ea-8b0a-bcee7b513d25",
+            "target": "131efad9-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        },
+        {
+            "source": "13009a8b-d622-11ea-8b0a-bcee7b513d25",
+            "target": "132affa0-d622-11ea-8b0a-bcee7b513d25",
+            "value": 1
+        }
+    ]
+}

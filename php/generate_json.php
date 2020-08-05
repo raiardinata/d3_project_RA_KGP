@@ -18,34 +18,20 @@ function loop_nodes($a, $b, $c)
 {
     $db_array = [];
     $trans_query = "
-        WITH RECURSIVE
-            tbl_transaksiCTE (
-                UUID, Step_ID, Description, 
-                LineNo, MaterialCode, Batch, 
-                RM_MaterialCode, RM_Batch, MaterialDescription, 
-                RM_MaterialDescription, `Key`, Prod_Grp
-            )
-            AS
+        WITH RECURSIVE tbl_transaksiCTE AS
             (
                 SELECT 
-                    UUID, a.Step_ID, Description, 
-                    LineNo, MaterialCode, Batch, 
-                    RM_MaterialCode, RM_Batch, MaterialDescription, 
-                    RM_MaterialDescription, `Key`, Prod_Grp
+                    a.*, b.Description
                 FROM
                     tbl_transaksi a
                     INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
                 WHERE 
                     (a.MaterialCode = '$a' AND a.Batch = '$b')
-                    OR (a.RM_MaterialCode = '$a' AND a.RM_Batch = '$b')
                 
                 UNION ALL
                 
                 SELECT 
-                    d.UUID, d.Step_ID, e.Description, 
-                    d.LineNo, d.MaterialCode, d.Batch, 
-                    d.RM_MaterialCode, d.RM_Batch, d.MaterialDescription, 
-                    d.RM_MaterialDescription, d.`Key`, d.Prod_Grp
+                    d.*, e.Description
                 FROM 
                     tbl_transaksiCTE c
                     INNER JOIN tbl_transaksi d ON
@@ -55,20 +41,11 @@ function loop_nodes($a, $b, $c)
                     INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
             )
         SELECT
-            a.UUID, a.Step_ID, c.Description, 
-            a.LineNo, a.MaterialCode, a.Batch, 
-            a.RM_MaterialCode, a.RM_Batch, a.MaterialDescription, 
-            a.RM_MaterialDescription, a.`Key`, a.Prod_Grp
+            *
         FROM
             tbl_transaksiCTE b
-            JOIN tbl_transaksi a ON 
-                (a.MaterialCode = b.MaterialCode AND a.Batch = b.Batch)
-                OR (a.RM_MaterialCode = b.MaterialCode AND a.RM_Batch = b.Batch)
-                OR (a.MaterialCode = b.RM_MaterialCode AND a.Batch = b.RM_Batch)
-                OR (a.RM_MaterialCode = b.RM_MaterialCode AND a.RM_Batch = b.RM_Batch)
-            INNER JOIN mstr_step c ON c.Step_ID = a.Step_ID
-        GROUP BY a.UUID
-        ORDER BY a.Step_ID ASC
+        GROUP BY b.UUID
+        ORDER BY b.Step_ID ASC
     ";
 
     $i = 0;
@@ -86,7 +63,7 @@ $z = count($resArray) -1;
 $MatCode = '';
 $Batch = '';
 
-function generate_link1($Step_ID, $MatCode, $Batch, $array) {
+function generate_link1($Step_ID, $MatCode, $Batch, $Qty, $array) {
     // Step 1 Search Step ID
     $keys = array_keys(array_column($array, 'Step_ID'), $Step_ID);
     $new_array = array_map(function($k) use ($array){return $array[$k];}, $keys);
@@ -96,10 +73,29 @@ function generate_link1($Step_ID, $MatCode, $Batch, $array) {
     // Step 3 Search Batch
     $keys = array_keys(array_column($new_array, 'Batch'), $Batch);
     $new_array = array_map(function($k) use ($new_array){return $new_array[$k];}, $keys);
+    // echo json_encode($new_array);
     return $new_array;
 }
 
-function generate_link2($Step_ID, $MatCode, $Batch, $array) {
+function generate_link2($Step_ID, $MatCode, $Batch, $Qty, $array) {
+    // Step 1 Search Step ID
+    $keys = array_keys(array_column($array, 'Step_ID'), $Step_ID);
+    $new_array = array_map(function($k) use ($array){return $array[$k];}, $keys);
+    // Step 2 Search Material Code
+    $keys = array_keys(array_column($new_array, 'RM_MaterialCode'), $MatCode);
+    $new_array = array_map(function($k) use ($new_array){return $new_array[$k];}, $keys);
+    // Step 3 Search Batch
+    $keys = array_keys(array_column($new_array, 'RM_Batch'), $Batch);
+    $new_array = array_map(function($k) use ($new_array){return $new_array[$k];}, $keys);
+    if($Step_ID == 300) {
+        // Step 3 Search Qty
+        $keys = array_keys(array_column($new_array, 'RM_Quantity'), $Qty);
+        $new_array = array_map(function($k) use ($new_array){return $new_array[$k];}, $keys);
+    }
+    return $new_array;
+}
+
+function generate_link3($Step_ID, $MatCode, $Batch, $Qty, $array) {
     // Step 1 Search Step ID
     $keys = array_keys(array_column($array, 'Step_ID'), $Step_ID);
     $new_array = array_map(function($k) use ($array){return $array[$k];}, $keys);
@@ -115,12 +111,13 @@ function generate_link2($Step_ID, $MatCode, $Batch, $array) {
 foreach($resArray as $nodes) {
     $MatCode = $nodes['MaterialCode'];
     $Batch = $nodes['Batch'];
+    $Qty = $nodes['Quantity'];
     if($i == 0) {
 
-        if($nodes['Step_ID'] == '100' ) {
-
-            $new_array = generate_link1(200, $MatCode, $Batch, $resArray);
-            if($new_array) {
+        $link_array = generate_link1(200, $MatCode, $Batch, $Qty, $resArray);
+        $link_count = 0;
+        foreach($link_array as $link) {
+            if($link_count == 0) {
                 $json_array = [
                     'nodes' => [
                         [
@@ -133,13 +130,22 @@ foreach($resArray as $nodes) {
                     'links' => [
                         [
                             'source'=>$nodes['UUID'],
-                            'target'=>$new_array[0]['UUID'],
+                            'target'=>$link['UUID'],
                             'value' => $i + 1
                         ],
                     ]
-                ];                
+                ];    
             }
+            else {
+                array_push($json_array['links'], [
+                    'source'=>$nodes['UUID'],
+                    'target'=>$link['UUID'],
+                    'value' => $i + 1
+                ]);
+            }
+            $link_count++;
         }
+        
     }
     else {
 
@@ -150,36 +156,37 @@ foreach($resArray as $nodes) {
             'description' => $nodes['Description']
         ]);
 
-        if ($i == $z){
-            break;
-        }
+        // if ($i == $z){
+        //     break;
+        // }
         
         if($nodes['Step_ID'] == '200' ) {
 
-            $new_array = generate_link2(300, $MatCode, $Batch, $resArray);
-            if($new_array) {
+            $link_array = generate_link2(300, $MatCode, $Batch, $Qty, $resArray);
+            foreach($link_array as $link) {
                 array_push($json_array['links'], [
                     'source'=>$nodes['UUID'],
-                    'target'=>$new_array[0]['UUID'],
+                    'target'=>$link['UUID'],
                     'value' => $i
                 ]);
             }
+                
         }
         if($nodes['Step_ID'] == '300' ) {
 
-            $new_array = generate_link2(300, $MatCode, $Batch, $resArray);
-            if($new_array) {
+            $link_array = generate_link3(300, $MatCode, $Batch, $Qty, $resArray);
+            foreach($link_array as $link) {
                 array_push($json_array['links'], [
                     'source'=>$nodes['UUID'],
-                    'target'=>$new_array[0]['UUID'],
+                    'target'=>$link['UUID'],
                     'value' => $i
                 ]);
             }
-            $new_array = generate_link1(400, $MatCode, $Batch, $resArray);
-            if($new_array) {
+            $link_array = generate_link1(400, $MatCode, $Batch, $Qty, $resArray);
+            foreach($link_array as $link) {
                 array_push($json_array['links'], [
                     'source'=>$nodes['UUID'],
-                    'target'=>$new_array[0]['UUID'],
+                    'target'=>$link['UUID'],
                     'value' => $i
                 ]);
             }

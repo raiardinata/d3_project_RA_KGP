@@ -1,95 +1,34 @@
 {
     "nodes": [
         {
-            "id": "100-121001055-20191003-Garam Samudra",
+            "id": "100-121000100-20190601-RM 121000100",
             "group": "100",
-            "detail": "29440ef2-c804-11ea-85a3-bcee7b513d25",
+            "detail": "13fbac75-d622-11ea-8b0a-bcee7b513d25",
             "description": "Inbound"
         },
         {
-            "id": "200-121001055-20191003-Garam Samudra",
+            "id": "200-121000100-20190601-RM 121000100",
             "group": "200",
-            "detail": "29458d12-c804-11ea-85a3-bcee7b513d25",
+            "detail": "141f0b13-d622-11ea-8b0a-bcee7b513d25",
             "description": "Transfer"
         },
         {
-            "id": "300-211000010-20191010-SFG MSK Bulk",
-            "group": "300",
-            "detail": "29458f8d-c804-11ea-85a3-bcee7b513d25",
-            "description": "Produksi"
-        },
-        {
-            "id": "300-211000010-20191010-SFG MSK Bulk",
-            "group": "300",
-            "detail": "294591f0-c804-11ea-85a3-bcee7b513d25",
-            "description": "Produksi"
-        },
-        {
-            "id": "300-124000814-20191011-250MA C (1 x 48) 250 g",
-            "group": "300",
-            "detail": "2945944f-c804-11ea-85a3-bcee7b513d25",
-            "description": "Produksi"
-        },
-        {
-            "id": "300-124000814-20191011-250MA C (1 x 48) 250 g",
-            "group": "300",
-            "detail": "294596a8-c804-11ea-85a3-bcee7b513d25",
-            "description": "Produksi"
-        },
-        {
-            "id": "300-124000814-20191011-250MA C (1 x 48) 250 g",
-            "group": "300",
-            "detail": "294599a5-c804-11ea-85a3-bcee7b513d25",
-            "description": "Produksi"
-        },
-        {
-            "id": "400-124000814-20191011-250MA C (1 x 48) 250 g",
-            "group": "400",
-            "detail": "29459c55-c804-11ea-85a3-bcee7b513d25",
-            "description": "Outbound"
-        },
-        {
-            "id": "400-124000814-20191011-250MA C (1 x 48) 250 g",
-            "group": "400",
-            "detail": "29459eb7-c804-11ea-85a3-bcee7b513d25",
-            "description": "Outbound"
+            "id": "200-121000100-20190601-RM 121000100",
+            "group": "200",
+            "detail": "147ac21e-d622-11ea-8b0a-bcee7b513d25",
+            "description": "Transfer"
         }
     ],
     "links": [
         {
-            "source": "29440ef2-c804-11ea-85a3-bcee7b513d25",
-            "target": "29458d12-c804-11ea-85a3-bcee7b513d25",
+            "source": "13fbac75-d622-11ea-8b0a-bcee7b513d25",
+            "target": "141f0b13-d622-11ea-8b0a-bcee7b513d25",
             "value": 1
         },
         {
-            "source": "29458d12-c804-11ea-85a3-bcee7b513d25",
-            "target": "29458f8d-c804-11ea-85a3-bcee7b513d25",
+            "source": "13fbac75-d622-11ea-8b0a-bcee7b513d25",
+            "target": "147ac21e-d622-11ea-8b0a-bcee7b513d25",
             "value": 1
-        },
-        {
-            "source": "29458f8d-c804-11ea-85a3-bcee7b513d25",
-            "target": "2945944f-c804-11ea-85a3-bcee7b513d25",
-            "value": 2
-        },
-        {
-            "source": "294591f0-c804-11ea-85a3-bcee7b513d25",
-            "target": "2945944f-c804-11ea-85a3-bcee7b513d25",
-            "value": 3
-        },
-        {
-            "source": "2945944f-c804-11ea-85a3-bcee7b513d25",
-            "target": "29459c55-c804-11ea-85a3-bcee7b513d25",
-            "value": 4
-        },
-        {
-            "source": "294596a8-c804-11ea-85a3-bcee7b513d25",
-            "target": "29459c55-c804-11ea-85a3-bcee7b513d25",
-            "value": 5
-        },
-        {
-            "source": "294599a5-c804-11ea-85a3-bcee7b513d25",
-            "target": "29459c55-c804-11ea-85a3-bcee7b513d25",
-            "value": 6
         }
     ]
 }
