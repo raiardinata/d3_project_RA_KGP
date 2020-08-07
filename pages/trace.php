@@ -60,7 +60,7 @@
 
 svg {
   width: 100%;
-  height: 700px;
+  height: 300px;
 }
 
 
@@ -100,8 +100,15 @@ svg {
 
     <header class="masthead bg-primary text-white text-center" style="background-color: white; padding: 0px">
         <div style="width: 100%; height: 100px;">
-            <h4 class="mb-4" style="color: #5f5f5f;">Search Criteria</h4>
+            <h4 class="mb-4" style="color: #5f5f5f; margin-bottom: 0px!important;">Search Criteria</h4>
             <table width="100%" height="20%">
+                <tr>
+                    <td>
+                        <label style="width: 150px;">Material Code</label>
+                        <label style="width: 150px;">Batch</label>
+                        <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
@@ -115,17 +122,19 @@ svg {
 
     <section>
         <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
-            <div class="row">
+            <div class="row" style="margin-right: 0px;">
+                <!-- Trace-->
+                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 100%;max-width: 100%;">
+                    <svg id="viz" width="100%" height="300px"></svg>
+                    <script src="../js/index.js"></script>
+                </div>
                 <!-- Detail panel-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 100%; max-width: 100%; padding-right: 0px;">
                     <h4 class="mb-4">Detail Panel</h4>
                     <p class="pre-wrap lead mb-0">Detail data panel for each node will be put on this panel.</p>
-                    <textarea id="txtDetailArea" style="margin-top: 0px;margin-bottom: 0px;height: 500px;width: 100%;"></textarea>
-                </div>
-                <!-- Trace-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 66%;max-width: 66%;">
-                    <svg id="viz" width="100%" height="700px"></svg>
-                    <script src="../js/index.js"></script>
+                    <div id="detailTable" style="width: 100%; height: 400px; overflow-y: scroll;">
+                        
+                    </div>
                 </div>
             </div>
         </div>

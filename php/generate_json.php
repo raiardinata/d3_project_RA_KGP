@@ -1,9 +1,9 @@
 <?php
 include 'db_conn.php';
-$matcd = $_POST['mtcd'];
-$batch = $_POST['batc'];
-// $matcd = '121001055';
-// $batch = '20191003';
+// $matcd = $_POST['mtcd'];
+// $batch = $_POST['batc'];
+$matcd = '121001055';
+$batch = '20191003';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -12,7 +12,10 @@ if (!$conn) {
     die('Connection failed: ' . mysqli_connect_error());
 }
 
-$stepsID = "";
+$step100 = false;
+$step200 = false;
+$step300 = false;
+$step400 = false;
 $json_array = [];
 function loop_nodes($a, $b, $c)
 {
@@ -51,12 +54,25 @@ function loop_nodes($a, $b, $c)
     $i = 0;
     $trans_res = mysqli_query($c, $trans_query);
     while ($row = mysqli_fetch_assoc($trans_res)) {
+        if($row['Step_ID'] == 100) {
+            $step100 = true;
+        }
+        else if($row['Step_ID'] == 200) {
+            $step200 = true;
+        }
+        else if($row['Step_ID'] == 300) {
+            $step300 = true;
+        }
+        else if($row['Step_ID'] == 400) {
+            $step400 = true;
+        }
         array_push($db_array, $row);
     }
     return $db_array;
 }
 
 $resArray = loop_nodes($matcd, $batch, $conn);
+// echo $step100, $step200, $step300, $step400;
 
 $i = 0;
 $z = count($resArray) -1;
@@ -227,9 +243,12 @@ foreach($resArray as $nodes) {
 // // array_push($json_array['links'], ['source'=> 'Inv. Transfer A.3', 'target'=> 'Prod. A', 'value'=> 1]);
 
 // echo json_encode($resArray,JSON_PRETTY_PRINT);
-$fp = fopen('../json/generate_json.json', 'w');
-fwrite($fp, json_encode($json_array,JSON_PRETTY_PRINT));
-fclose($fp);
+echo json_encode($json_array,JSON_PRETTY_PRINT);
+// $fp = fopen('../json/generate_json.json', 'w');
+// fwrite($fp, json_encode($json_array,JSON_PRETTY_PRINT));
+// fclose($fp);
 
 // echo 'ok';
 mysqli_close($conn);
+
+?>
