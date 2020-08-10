@@ -186,8 +186,16 @@ function generate_simulation() {
 }
 
 function generateDynamicTable(graphTable, Step_ID) {
+
+    debugger;
+    $('[id=\'' + Step_ID + '\']').remove();
     
     var graphLength = graphTable.length;
+    var br = document.createElement('br');
+    var h4 = document.createElement('H4');
+    h4.setAttribute('id', Step_ID);
+    h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +';');//color(d.group)
+
 
     if (graphLength > 0) {
 
@@ -250,7 +258,10 @@ function generateDynamicTable(graphTable, Step_ID) {
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
         var divContainer = document.getElementById("detailTable");
         // divContainer.innerHTML = Step_ID;
+        divContainer.appendChild(br);
+        divContainer.appendChild(h4);
         divContainer.appendChild(table);
+        $('[id=\'' + Step_ID + '\']H4').text(Step_ID.replace(/_/g, ' '));
 
     }
 }
@@ -274,13 +285,12 @@ $('[id=\'btnSearch\']').on('click', function () {
     function generateArray400(array) {
         return array['Step_ID'] == 400;
     }
-    debugger;
     var Step100 = graphTable.filter(generateArray100);
-    generateDynamicTable(Step100, 'Step 100');
+    generateDynamicTable(Step100, 'Step_100');
     var Step200 = graphTable.filter(generateArray200);
-    generateDynamicTable(Step200, 'Step 200');
+    generateDynamicTable(Step200, 'Step_200');
     var Step300 = graphTable.filter(generateArray300);
-    generateDynamicTable(Step300, 'Step 300');
+    generateDynamicTable(Step300, 'Step_300');
     var Step400 = graphTable.filter(generateArray400);
-    generateDynamicTable(Step400, 'Step 400');
+    generateDynamicTable(Step400, 'Step_400');
 });
