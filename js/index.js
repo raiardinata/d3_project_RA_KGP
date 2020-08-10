@@ -221,6 +221,7 @@ function generateDynamicTable(graphTable, Step_ID) {
 
         // CREATE TABLE HEAD .
         var tHead = document.createElement("thead");
+        tHead.setAttribute('style', 'background-color: '+ color(Step_ID.substring(5)) +';');
 
 
         // CREATE ROW FOR TABLE HEAD .
