@@ -15,27 +15,28 @@
     $rowArray = [];
     $trans_query = "
         WITH RECURSIVE tbl_transaksiCTE AS
-            (
-                SELECT 
-                    a.*, b.Description
-                FROM
-                    tbl_transaksi a
-                    INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
-                WHERE 
-                    (a.MaterialCode = '$matcd' AND a.Batch = '$batch')
-                
-                UNION ALL
-                
-                SELECT 
-                    d.*, e.Description
-                FROM 
-                    tbl_transaksiCTE c
-                    INNER JOIN tbl_transaksi d ON
-                        (
-                            (d.RM_MaterialCode = c.MaterialCode AND d.RM_Batch = c.Batch)
-                        )
-                    INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
-            )
+        (
+            SELECT 
+                a.*, b.Description
+            FROM
+                tbl_transaksi a
+            INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
+            WHERE
+                    (
+                        (a.MaterialCode='$a' AND a.Batch = '$b')
+                        OR	(a.RM_MaterialCode='$a' AND a.RM_Batch = '$b')
+                    )
+            
+            UNION ALL
+            
+            SELECT 
+                d.*, e.Description
+            FROM 
+                tbl_transaksiCTE c
+            INNER JOIN tbl_transaksi d ON (d.MaterialCode = c.RM_MaterialCode AND d.Batch = c.RM_Batch)
+            INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
+        
+        )
         SELECT
             *
         FROM

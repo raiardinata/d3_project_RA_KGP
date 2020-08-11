@@ -111,8 +111,8 @@ svg {
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
-                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="20191003" style="width: 150px;">
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="" style="width: 150px;">
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="" style="width: 150px;">
                         <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>

@@ -2,8 +2,8 @@
 include 'db_conn.php';
 // $matcd = $_POST['mtcd'];
 // $batch = $_POST['batc'];
-$matcd = '121001055';
-$batch = '20191003';
+$matcd = '124000714';
+$batch = '20191011';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -22,27 +22,28 @@ function loop_nodes($a, $b, $c)
     $db_array = [];
     $trans_query = "
         WITH RECURSIVE tbl_transaksiCTE AS
-            (
-                SELECT 
-                    a.*, b.Description
-                FROM
-                    tbl_transaksi a
-                    INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
-                WHERE 
-                    (a.MaterialCode = '$a' AND a.Batch = '$b')
-                
-                UNION ALL
-                
-                SELECT 
-                    d.*, e.Description
-                FROM 
-                    tbl_transaksiCTE c
-                    INNER JOIN tbl_transaksi d ON
-                        (
-                            (d.RM_MaterialCode = c.MaterialCode AND d.RM_Batch = c.Batch)
-                        )
-                    INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
-            )
+        (
+            SELECT 
+                a.*, b.Description
+            FROM
+                tbl_transaksi a
+            INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
+            WHERE
+                    (
+                        (a.MaterialCode='$a' AND a.Batch = '$b')
+                        OR	(a.RM_MaterialCode='$a' AND a.RM_Batch = '$b')
+                    )
+            
+            UNION ALL
+            
+            SELECT 
+                d.*, e.Description
+            FROM 
+                tbl_transaksiCTE c
+            INNER JOIN tbl_transaksi d ON (d.MaterialCode = c.RM_MaterialCode AND d.Batch = c.RM_Batch)
+            INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
+        
+        )
         SELECT
             *
         FROM
@@ -125,6 +126,7 @@ function generate_link3($Step_ID, $MatCode, $Batch, $Qty, $array) {
 }
 
 foreach($resArray as $nodes) {
+
     $MatCode = $nodes['MaterialCode'];
     $Batch = $nodes['Batch'];
     $Qty = $nodes['Quantity'];
@@ -140,7 +142,8 @@ foreach($resArray as $nodes) {
                             'id' => $resArray[$i]['Step_ID'] . '-' . $resArray[$i]['MaterialCode'] . '-' . $resArray[$i]['Batch'] . '-' . $resArray[$i]['MaterialDescription'],
                             'group' => $nodes['Step_ID'],
                             'detail' => $nodes['UUID'],
-                            'description' => $nodes['Description']
+                            'description' => $nodes['Description'],
+                            'material' => $nodes['MaterialDescription']
                         ],
                     ],
                     'links' => [
@@ -169,12 +172,9 @@ foreach($resArray as $nodes) {
             'id'=>$resArray[$i]['Step_ID'] . '-' . $resArray[$i]['MaterialCode'] . '-' . $resArray[$i]['Batch'] . '-' . $resArray[$i]['MaterialDescription'],
             'group' => $nodes['Step_ID'],
             'detail' => $nodes['UUID'],
-            'description' => $nodes['Description']
+            'description' => $nodes['Description'],
+            'material' => $nodes['MaterialDescription']
         ]);
-
-        // if ($i == $z){
-        //     break;
-        // }
         
         if($nodes['Step_ID'] == '200' ) {
 
@@ -213,42 +213,8 @@ foreach($resArray as $nodes) {
     $i++;
 }
 
-// echo json_encode($json_array, JSON_PRETTY_PRINT);
-// $json_array = [
-//     'nodes' => [
-//         ['id' => 'Material A', 'group' => '0', 'detail' => 'Detail from Material A'],
-//         ['id' => 'Inv. Transfer A', 'group' => '1', 'detail' => 'Detail from Inv. Trans. A']
-//     ],
-//     'links' => [
-//         ['source' => 'Material A', 'target' => 'Inv. Transfer A', 'value' => '1']
-//     ]
-// ];
-
-//push into nodes
-// array_push($json_array['nodes'], ['id'=>'Inv. Transfer B','group'=>'2','detail'=>'Detail from Inv. Transfer B']);
-// array_push($json_array['nodes'], ["id"=> "Inv. Transfer A.1", "group"=> 2, "detail"=> "kfc"]);
-// array_push($json_array['nodes'], ["id"=> "Inv. Transfer A.2", "group"=> 2, "detail"=> "kfc"]);
-// array_push($json_array['nodes'], ["id"=> "Inv. Transfer A.3", "group"=> 2, "detail"=> "kfc"]);
-// array_push($json_array['nodes'], ["id"=> "Shipping", "group"=> 5, "detail"=> "kyt"]);
-// array_push($json_array['nodes'], ["id"=> "Prod. A", "group"=> 3, "detail"=> "fde"]);
-
-//push into links
-// // array_push($json_array['links'], ['source'=>'Inv. Transfer A','target'=>'Inv. Transfer A.1','value'=>'1']);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer A', 'target'=> 'Inv. Transfer A.2', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer A', 'target'=> 'Inv. Transfer A.3', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Prod. A', 'target'=> 'Inv. Transfer B', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer B', 'target'=> 'Shipping', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer A.1', 'target'=> 'Prod. A', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer A.2', 'target'=> 'Prod. A', 'value'=> 1]);
-// // array_push($json_array['links'], ['source'=> 'Inv. Transfer A.3', 'target'=> 'Prod. A', 'value'=> 1]);
-
-// echo json_encode($resArray,JSON_PRETTY_PRINT);
 echo json_encode($json_array,JSON_PRETTY_PRINT);
-// $fp = fopen('../json/generate_json.json', 'w');
-// fwrite($fp, json_encode($json_array,JSON_PRETTY_PRINT));
-// fclose($fp);
 
-// echo 'ok';
 mysqli_close($conn);
 
 ?>

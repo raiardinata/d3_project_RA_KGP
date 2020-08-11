@@ -4,15 +4,16 @@ var width = $("[id='viz']").width();
 var height = $("[id='viz']").height();
 var color = d3.scaleOrdinal(d3.schemeTableau10);
 var base_url = window.location.origin;
-const mtcd = $('[id=\'inputMaterialcode\']').val();
-const batc = $('[id=\'inputBatch\']').val();
 
 function generate_simulation() {
+    const mtcd = $('[id=\'inputMaterialcode\']').val();
+    const batc = $('[id=\'inputBatch\']').val();
 
     //generate json file
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
-    reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
+    reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/test.php');
     var graph = JSON.parse(reqResult);
+    debugger;
     
     var label = {
         'nodes': [],
@@ -35,11 +36,11 @@ function generate_simulation() {
         .force("link", d3.forceLink(label.links).distance(2).strength(2));
 
     var graphLayout = d3.forceSimulation(graph.nodes)
-        .force("charge", d3.forceManyBody().strength(-1000).distanceMax(400).distanceMin(80))
+        .force("charge", d3.forceManyBody().strength(-2000).distanceMax(1000).distanceMin(80))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("x", d3.forceX(width / 2))
         .force("y", d3.forceY(height / 2))
-        .force("link", d3.forceLink(graph.links).id(function (d) { return d.detail; }).distance(50).strength(1))
+        .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(50).strength(1))
         .on("tick", ticked);
 
     var adjlist = [];
@@ -92,13 +93,13 @@ function generate_simulation() {
         .data(label.nodes)
         .enter()
         .append("text")
-        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description; })
+        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description + ' (' + d.node.material + ')'; })
         .style("fill", "#555")
         .style("font-family", "Arial")
         .style("font-size", 12)
         .style("pointer-events", "none"); // to prevent mouseover/drag capture
 
-    node.on("mouseover", focus).on("mouseout", unfocus);
+    node.on("mouseover", focus).on("mouseout", unfocus).on('click', click);
 
     function ticked() {
 
@@ -134,7 +135,6 @@ function generate_simulation() {
     }
 
     function focus(d) {
-        $('#txtDetailArea').val(d.id);
         var index = d3.select(d3.event.target).datum().index;
         node.style("opacity", function (o) {
             return neigh(index, o.index) ? 1 : 0.1;
@@ -145,6 +145,11 @@ function generate_simulation() {
         link.style("opacity", function (o) {
             return o.source.index == index || o.target.index == index ? 1 : 0.1;
         });
+    }
+
+    function click(d) {
+        highlight = '#Step_'+d.group;
+        window.location.href = '#Step_'+d.group;
     }
 
     function unfocus() {
@@ -187,7 +192,6 @@ function generate_simulation() {
 
 function generateDynamicTable(graphTable, Step_ID) {
 
-    debugger;
     $('[id=\'' + Step_ID + '\']').remove();
     
     var graphLength = graphTable.length;
@@ -271,6 +275,8 @@ $('[id=\'btnSearch\']').on('click', function () {
     $('[id=\'forceSimulationG\']').remove();
     generate_simulation();
 
+    const mtcd = $('[id=\'inputMaterialcode\']').val();
+    const batc = $('[id=\'inputBatch\']').val();
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     var graphRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
     var graphTable = JSON.parse(graphRess);
