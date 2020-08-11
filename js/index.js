@@ -30,9 +30,9 @@ function generate_simulation() {
     });
 
     var labelLayout = d3.forceSimulation(label.nodes)
-        .force("charge", d3.forceManyBody().strength(-50))
+        .force("charge", d3.forceManyBody().strength(-1000))
         // .force("x", d3.forceX(250))
-        .force("y", d3.forceY(250))
+        .force("y", d3.forceY(0))
         .force("link", d3.forceLink(label.links).distance(2).strength(2));
 
     var graphLayout = d3.forceSimulation(graph.nodes)
@@ -40,7 +40,7 @@ function generate_simulation() {
         .force("center", d3.forceCenter(width / 2, height / 2))
         // .force("x", d3.forceX(width / 2))
         .force("y", d3.forceY(height / 2))
-        .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(50).strength(1))
+        .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(150).strength(1))
         .on("tick", ticked);
 
     var adjlist = [];
@@ -96,7 +96,7 @@ function generate_simulation() {
         .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description + ' (' + d.node.material + ')'; })
         .style("fill", "#555")
         .style("font-family", "Arial")
-        .style("font-size", 12)
+        .style("font-size", '1rem')
         .style("pointer-events", "none"); // to prevent mouseover/drag capture
 
     node.on("mouseover", focus).on("mouseout", unfocus).on('click', click);
