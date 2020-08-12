@@ -13,7 +13,6 @@ function generate_simulation() {
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/test.php');
     var graph = JSON.parse(reqResult);
-    debugger;
     
     var label = {
         'nodes': [],

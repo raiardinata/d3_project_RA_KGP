@@ -23,8 +23,8 @@
             INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
             WHERE
                     (
-                        (a.MaterialCode='$a' AND a.Batch = '$b')
-                        OR	(a.RM_MaterialCode='$a' AND a.RM_Batch = '$b')
+                        (a.MaterialCode='$matcd' AND a.Batch = '$batch')
+                        OR	(a.RM_MaterialCode='$matcd' AND a.RM_Batch = '$batch')
                     )
             
             UNION ALL
