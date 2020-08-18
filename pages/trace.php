@@ -24,13 +24,6 @@
                 sessionStorage.clear();
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
-
-            // $('#btnSearch').click(function(){
-            //     if(!$('#inputMaterialcode').val() || !$('#inputBatch').val() )
-            //         alert('TEST!');
-            //     else
-            //         alert('Something on the field');
-            // });
         });
     </script>
     <!--===============================================================================================-->
@@ -56,25 +49,18 @@
             height: var(--link-size);
             margin: 5px 7px;
         }
-
-
-svg {
-  width: 100%;
-  height: 300px;
-}
-
-
-
-.node {
-  pointer-events: all;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-
-.node text {
-  font: 8px sans-serif;
-}
+        svg {
+            width: 100%;
+            height: 300px;
+        }
+        .node {
+            pointer-events: all;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .node text {
+            font: 8px sans-serif;
+        }
     </style>
 </head>
 
@@ -99,8 +85,7 @@ svg {
 
 
     <header class="masthead bg-primary text-white text-center" style="background-color: white; padding: 0px">
-        <div style="width: 100%; height: 100px;">
-            <h4 class="mb-4" style="color: #5f5f5f; margin-bottom: 0px!important;">Search Criteria</h4>
+        <div style="width: 100%; height: 100%;">
             <table width="100%" height="20%">
                 <tr>
                     <td>
@@ -124,14 +109,12 @@ svg {
         <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
             <div class="row" style="margin-right: 0px;">
                 <!-- Trace-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 100%;max-width: 100%;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%;">
                     <svg id="viz" width="100%" height="300px"></svg>
                     <script src="../js/index.js"></script>
                 </div>
                 <!-- Detail panel-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="border-top: solid; border-color: #0288d1; flex:0 0 100%; max-width: 100%; padding-right: 0px;">
-                    <h4 class="mb-4">Detail Panel</h4>
-                    <p class="pre-wrap lead mb-0">Detail data panel for each node will be put on this panel.</p>
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; max-width: 100%; padding-right: 0px;">
                     <div id="detailTable" style="width: 100%; height: 400px; overflow-y: scroll;">
                         
                     </div>

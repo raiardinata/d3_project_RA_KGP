@@ -9,10 +9,11 @@ var tableArray = [];
 function generate_simulation() {
     const mtcd = $('[id=\'inputMaterialcode\']').val();
     const batc = $('[id=\'inputBatch\']').val();
+    tableArray = [];
 
     //generate json file
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
-    reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/test.php');
+    reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
     var graph = JSON.parse(reqResult);
     if(!graph) {
         alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
@@ -35,16 +36,16 @@ function generate_simulation() {
 
     var labelLayout = d3.forceSimulation(label.nodes)
         .force("charge", d3.forceManyBody().strength(-1000))
-        // .force("x", d3.forceX(250))
+        .force("x", d3.forceX(250))
         .force("y", d3.forceY(0))
         .force("link", d3.forceLink(label.links).distance(2).strength(2));
 
     var graphLayout = d3.forceSimulation(graph.nodes)
-        .force("charge", d3.forceManyBody().strength(-2000).distanceMax(1000).distanceMin(80))
-        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("charge", d3.forceManyBody().strength(-2000).distanceMax(-2000).distanceMin(-80))
+        // .force("center", d3.forceCenter(width / 2, height / 2))
         .force("x", d3.forceX(width / 2))
         .force("y", d3.forceY(height / 2))
-        .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(150).strength(1))
+        .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(200).strength(1))
         .on("tick", ticked);
 
     var adjlist = [];
@@ -209,7 +210,6 @@ function generateDynamicTable(rawArray, Step_ID) {
     });
     
     var graphLength = graphTable.length;
-    var br = document.createElement('br');
     var h4 = document.createElement('H4');
     h4.setAttribute('id', Step_ID);
     h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +';');//color(d.group)
@@ -277,10 +277,10 @@ function generateDynamicTable(rawArray, Step_ID) {
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
         var divContainer = document.getElementById("detailTable");
         // divContainer.innerHTML = Step_ID;
-        divContainer.appendChild(br);
         divContainer.appendChild(h4);
         divContainer.appendChild(table);
-        $('[id=\'' + Step_ID + '\']H4').text(Step_ID.replace(/_/g, ' '));
+        debugger;
+        $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
     }
 }
 
