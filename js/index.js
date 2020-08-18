@@ -4,6 +4,7 @@ var width = $("[id='viz']").width();
 var height = $("[id='viz']").height();
 var color = d3.scaleOrdinal(d3.schemeTableau10);
 var base_url = window.location.origin;
+var tableArray = [];
 
 function generate_simulation() {
     const mtcd = $('[id=\'inputMaterialcode\']').val();
@@ -13,6 +14,9 @@ function generate_simulation() {
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/test.php');
     var graph = JSON.parse(reqResult);
+    if(!graph) {
+        alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
+    }
     
     var label = {
         'nodes': [],
@@ -20,6 +24,7 @@ function generate_simulation() {
     };
 
     graph.nodes.forEach(function (d, i) {
+        tableArray.push( d );
         label.nodes.push({ node: d });
         label.nodes.push({ node: d });
         label.links.push({
@@ -37,7 +42,7 @@ function generate_simulation() {
     var graphLayout = d3.forceSimulation(graph.nodes)
         .force("charge", d3.forceManyBody().strength(-2000).distanceMax(1000).distanceMin(80))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        // .force("x", d3.forceX(width / 2))
+        .force("x", d3.forceX(width / 2))
         .force("y", d3.forceY(height / 2))
         .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(150).strength(1))
         .on("tick", ticked);
@@ -92,7 +97,8 @@ function generate_simulation() {
         .data(label.nodes)
         .enter()
         .append("text")
-        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description + ' (' + d.node.material + ')'; })
+        .attr("id", function(d,i) { return i % 2 == 0 ? "" : "txt" + d.node.id} )
+        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description + ' \n(' + d.node.material + ')'; })
         .style("fill", "#555")
         .style("font-family", "Arial")
         .style("font-size", '1rem')
@@ -189,9 +195,18 @@ function generate_simulation() {
     }
 }
 
-function generateDynamicTable(graphTable, Step_ID) {
-
+function generateDynamicTable(rawArray, Step_ID) {
+    var graphTable = [];
     $('[id=\'' + Step_ID + '\']').remove();
+
+    rawArray.forEach(element => {
+        jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : element['id'], Step_ID : element['group'] }, async: false, success: function (data) { result = data; } }); return result; } });
+        var graphRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
+        graphRess = JSON.parse(graphRess);
+        for(var i in graphRess) {
+            graphTable.push(graphRess[i]);
+        }
+    });
     
     var graphLength = graphTable.length;
     var br = document.createElement('br');
@@ -266,8 +281,13 @@ function generateDynamicTable(graphTable, Step_ID) {
         divContainer.appendChild(h4);
         divContainer.appendChild(table);
         $('[id=\'' + Step_ID + '\']H4').text(Step_ID.replace(/_/g, ' '));
-
     }
+}
+
+function generateTableQuery(mtcd, batc, step) {
+    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc, step: step }, async: false, success: function (data) { result = data; } }); return result; } });
+    var graphRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
+    return graphTable = JSON.parse(graphRess);
 }
 
 $('[id=\'btnSearch\']').on('click', function () {
@@ -276,27 +296,25 @@ $('[id=\'btnSearch\']').on('click', function () {
 
     const mtcd = $('[id=\'inputMaterialcode\']').val();
     const batc = $('[id=\'inputBatch\']').val();
-    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
-    var graphRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
-    var graphTable = JSON.parse(graphRess);
+   
     function generateArray100(array) {
-        return array['Step_ID'] == 100;
+        return array['group'] == 100;
     }
     function generateArray200(array) {
-        return array['Step_ID'] == 200;
+        return array['group'] == 200;
     }
     function generateArray300(array) {
-        return array['Step_ID'] == 300;
+        return array['group'] == 300;
     }
     function generateArray400(array) {
-        return array['Step_ID'] == 400;
+        return array['group'] == 400;
     }
-    var Step100 = graphTable.filter(generateArray100);
+    var Step100 = tableArray.filter(generateArray100);
     generateDynamicTable(Step100, 'Step_100');
-    var Step200 = graphTable.filter(generateArray200);
+    var Step200 = tableArray.filter(generateArray200);
     generateDynamicTable(Step200, 'Step_200');
-    var Step300 = graphTable.filter(generateArray300);
+    var Step300 = tableArray.filter(generateArray300);
     generateDynamicTable(Step300, 'Step_300');
-    var Step400 = graphTable.filter(generateArray400);
+    var Step400 = tableArray.filter(generateArray400);
     generateDynamicTable(Step400, 'Step_400');
 });

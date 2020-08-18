@@ -1,9 +1,9 @@
 <?php
     include 'db_conn.php';
-    $matcd = $_POST['mtcd'];
-    $batch = $_POST['batc'];
-    // $matcd = '121001055';
-    // $batch = '20191003';
+    $uuid = $_POST['id'];
+    $step = $_POST['Step_ID'];
+    // $uuid = '1367f825-d622-11ea-8b0a-bcee7b513d25';
+    // $step = '200';
 
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -12,43 +12,49 @@
         die('Connection failed: ' . mysqli_connect_error());
     }
 
-    $rowArray = [];
+    function unique_multidim_array($array, $key) {
+        $temp_array = array();
+        $i = 0;
+        $z = 0;
+        $key_array = array();
+       
+        foreach($array as $val) {
+            if (!in_array($val[$key], $key_array)) {
+                $key_array[$i] = $val[$key];
+                if($val[$key]) {
+                    $temp_array[$z] = $val;
+                    $z++;
+                }
+            }
+            $i++;
+        }
+        return $temp_array;
+    }
+
+    // push data by step
+    $field = "";
+    $row_array = [];
+    $field_query = "
+        SELECT GROUP_CONCAT(Filed) as Field FROM mstr_query WHERE Step_ID = '$step' LIMIT 1
+    ";
+    $field_res = mysqli_query($conn, $field_query);
+    $field_row = mysqli_fetch_assoc($field_res);
+    $field = $field_row['Field'];
     $trans_query = "
-        WITH RECURSIVE tbl_transaksiCTE AS
-        (
-            SELECT 
-                a.*, b.Description
-            FROM
-                tbl_transaksi a
-            INNER JOIN mstr_step b ON b.Step_ID = a.Step_ID
-            WHERE
-                    (
-                        (a.MaterialCode='$matcd' AND a.Batch = '$batch')
-                        OR	(a.RM_MaterialCode='$matcd' AND a.RM_Batch = '$batch')
-                    )
-            
-            UNION ALL
-            
-            SELECT 
-                d.*, e.Description
-            FROM 
-                tbl_transaksiCTE c
-            INNER JOIN tbl_transaksi d ON (d.MaterialCode = c.RM_MaterialCode AND d.Batch = c.RM_Batch)
-            INNER JOIN mstr_step e ON e.Step_ID = d.Step_ID
-        
-        )
-        SELECT
-            *
-        FROM
-            tbl_transaksiCTE b
-        GROUP BY b.UUID
-        ORDER BY b.Step_ID ASC
+        SELECT 
+            $field
+        FROM 
+            tbl_transaksi a 
+            INNER JOIN mstr_step b ON a.Step_ID = b.Step_ID 
+        WHERE
+        a.UUID = '$uuid'
     ";
     $trans_res = mysqli_query($conn, $trans_query);
-    while ($row = mysqli_fetch_assoc($trans_res)) {
-        array_push($rowArray, $row);
+    while($trans_row = mysqli_fetch_assoc($trans_res)) {
+        array_push($row_array, $trans_row);
     }
-    echo $jsonRes = json_encode($rowArray);
+
+    echo json_encode($row_array);
     mysqli_close($conn);
 
 ?>
