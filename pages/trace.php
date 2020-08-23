@@ -144,10 +144,13 @@
         </div>
     </footer>
 -->
-    <!-- Copyright Section-->
-    <section class="copyright py-4 text-center text-white">
-        <div class="container"><small class="pre-wrap" style="font-weight: bold;">Copyright © Traceability System 2020</small></div>
-    </section>
+    <footer style="position: relative; left: 0; bottom: 0; width: 100%; text-align: center;">
+        <!-- Copyright Section-->
+        <section class="copyright py-4 text-center text-white">
+            <div class="container"><small class="pre-wrap" style="font-weight: bold;">Copyright © Traceability System 2020</small></div>
+        </section>
+    </footer>
+
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
     <!-- Bootstrap core JS-->
