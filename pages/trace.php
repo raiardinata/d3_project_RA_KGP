@@ -122,20 +122,20 @@
             </div>
         </div>
     </section>
-
+<!--
     <footer class="footer text-center">
         <div class="container">
             <div class="row">
-                <!-- Footer Location-->
+                Footer Location
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">SUPPORT</h4>
                     <p class="pre-wrap lead mb-0">DKI Jakarta, Jakarta Timur, <?php echo "\n"; ?>Mobile: 080989999</p>
                 </div>
-                <!-- Footer Social Icons-->
+                Footer Social Icons
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-facebook-f"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="#"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
-                <!-- Footer About Text-->
+                Footer About Text
                 <div class="col-lg-4">
                     <h4 class="mb-4">ABOUT TRACEABILITY</h4>
                     <p class="pre-wrap lead mb-0">Traceability System is tracking system solution for your real time guidance.</p>
@@ -143,7 +143,7 @@
             </div>
         </div>
     </footer>
-
+-->
     <!-- Copyright Section-->
     <section class="copyright py-4 text-center text-white">
         <div class="container"><small class="pre-wrap" style="font-weight: bold;">Copyright © Traceability System 2020</small></div>
