@@ -12,10 +12,6 @@ if (!$conn) {
     die('Connection failed: ' . mysqli_connect_error());
 }
 
-$step100 = false;
-$step200 = false;
-$step300 = false;
-$step400 = false;
 $json_array = [];
 function loop_nodes($a, $b, $c)
 {
