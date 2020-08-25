@@ -94,8 +94,7 @@
                         <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
                     <td>
-                        <label style="width: 150px; color: #5F5F60">Material Code</label>
-                        <label style="width: 150px; color: #5F5F60">Batch</label>
+                        <label style="width: 150px; color: #5F5F60">Detail Material and Batch Panel</label>
                     </td>
                 </tr>
                 <tr>
