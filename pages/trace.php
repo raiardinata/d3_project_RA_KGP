@@ -88,20 +88,20 @@
         <div style="width: 100%; height: 100%;">
             <table width="100%" height="20%">
                 <tr>
-                    <td>
+                    <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Material Code</label>
-                        <label style="width: 150px; color: #5F5F60">Batch</label>
-                        <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
+                        <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
-                    <td>
+                    <td rowspan="2" style="text-align: left; padding-left: 50px; width: 50%; border: solid;">
                         <label style="width: 150px; color: #5F5F60">Detail Material and Batch Panel</label>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
+                    <td style="text-align: left; padding-left: 50px; width: 50%;">
+                        <label style="width: 150px; color: #5F5F60">Batch</label>
                         <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="20191003" style="width: 150px;">
-                        <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
+                        <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>
             </table>
@@ -113,7 +113,7 @@
             <div class="row" style="margin-right: 0px;">
                 <!-- Trace-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%; padding-top: 10px; padding-bottom: 10px;">
-                    <svg id="viz" width="100%" height="300px"></svg>
+                    <svg id="viz" width="100%" height="300px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
                     <script src="../js/index.js"></script>
                 </div>
                 <!-- Detail panel-->
