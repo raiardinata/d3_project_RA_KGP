@@ -37,7 +37,7 @@ function generate_simulation() {
     // A scale that gives a X target position for each group
     var x = d3.scaleOrdinal()
         .domain([1, 2, 3, 4])
-        .range([50, 200, 340, 500]);
+        .range([50, 340, 640, 900]);
 
     var labelLayout = d3.forceSimulation(label.nodes)
         .force("charge", d3.forceManyBody().strength(-1000))
@@ -203,7 +203,6 @@ function generate_simulation() {
 
 function generateDynamicTable(rawArray, Step_ID) {
     var graphTable = [];
-    var graphAlias = [];
     $('[id=\'' + Step_ID + '\']').remove();
 
     rawArray.forEach(element => {
@@ -225,10 +224,12 @@ function generateDynamicTable(rawArray, Step_ID) {
 
         // CREATE DYNAMIC TABLE.
         var table = document.createElement("table");
-        table.style.width = '50%';
+        table.setAttribute('width', 'auto');
+        table.setAttribute('max-width', '400%');
         table.setAttribute('border', '1');
         table.setAttribute('cellspacing', '0');
         table.setAttribute('cellpadding', '5');
+        table.setAttribute('white-space', 'nowrap;');
         table.setAttribute('id', Step_ID);
 
         // retrieve column header ('Name', 'Email', and 'Mobile')
@@ -262,6 +263,7 @@ function generateDynamicTable(rawArray, Step_ID) {
         for (var i = 0; i < colUser.length; i++) {
             var th = document.createElement("th");
             th.innerHTML = colUser[i];
+            th.setAttribute('style', 'white-space: nowrap;');
             hRow.appendChild(th);
         }
         tHead.appendChild(hRow);
@@ -279,6 +281,7 @@ function generateDynamicTable(rawArray, Step_ID) {
             for (var j = 0; j < col.length; j++) {
                 var td = document.createElement("td");
                 td.innerHTML = graphTable[i][col[j]];
+                td.setAttribute('style', 'white-space: nowrap;');
                 bRow.appendChild(td);
             }
             tBody.appendChild(bRow)
@@ -288,7 +291,7 @@ function generateDynamicTable(rawArray, Step_ID) {
 
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("detailTable");
+        var divContainer = document.getElementById("font");
         // divContainer.innerHTML = Step_ID;
         divContainer.appendChild(h4);
         divContainer.appendChild(table);

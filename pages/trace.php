@@ -119,7 +119,8 @@
                 <!-- Detail panel-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; max-width: 100%; padding-right: 0px;">
                     <div id="detailTable" style="width: 100%; height: 400px; overflow-y: scroll;">
-                        
+                        <font size="2" id="font">
+                        </font>
                     </div>
                 </div>
             </div>
