@@ -104,127 +104,128 @@ INSERT INTO `mstr_node` (`Step_ID`, `Prod_Grp`, `Key`, `Description`) VALUES
 CREATE TABLE IF NOT EXISTS `mstr_query` (
   `Step_ID` int(11) DEFAULT NULL,
   `Seq_No` int(11) DEFAULT NULL,
-  `Filed` varchar(50) DEFAULT NULL
+  `Filed` varchar(50) DEFAULT NULL,
+  `Alias` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Master query data component';
 
 -- Dumping data for table powerbitable.mstr_query: ~58 rows (approximately)
 /*!40000 ALTER TABLE `mstr_query` DISABLE KEYS */;
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 1, 'DocumentNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 2, 'VendorID');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 3, 'VendorName');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 4, 'PONumber');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 5, 'LineNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 6, 'MaterialCode');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 7, 'MaterialDescription');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 8, 'Quantity');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 9, 'UoM');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 10, 'Batch');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 11, 'BatchVendor');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 12, 'DocumentDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 13, 'ProductionDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 14, 'ExpiredDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 15, 'Plant');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(100, 16, 'Warehouse');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 1, 'DocumentNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 2, 'LineNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 3, 'MaterialCode');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 4, 'MaterialDescription');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 5, 'Quantity');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 6, 'UoM');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 7, 'Batch');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 8, 'BatchVendor');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 9, 'DocumentDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 10, 'Plant');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 11, 'Warehouse');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 12, 'ToPlant');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(200, 13, 'ToWarehouse');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 1, 'LineNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 2, 'MaterialCode');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 3, 'MaterialDescription');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 4, 'Quantity');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 5, 'UoM');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 6, 'Batch');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 7, 'ProductionDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 8, 'Plant');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 9, 'Warehouse');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 10, 'WorkOrder');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 11, 'RM_MaterialCode');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 12, 'RM_MaterialDescription');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 13, 'RM_Batch');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 14, 'RM_Quantity');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(300, 15, 'RM_UOM');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 1, 'DocumentNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 2, 'LineNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 3, 'MaterialCode');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 4, 'MaterialDescription');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 5, 'Quantity');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 6, 'UoM');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 7, 'Batch');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 8, 'ProductionDate');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 9, 'Plant');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 10, 'Warehouse');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 11, 'SalesOrder');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 12, 'Sales_LineNo');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 13, 'CustomerID');
-INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`) VALUES
-	(400, 14, 'CustomerName');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 1, 'DocumentNo', 'Document No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 2, 'VendorID', 'Vendor ID');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 3, 'VendorName', 'Vendor Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 4, 'PONumber', 'PO No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 5, 'LineNo', 'Line No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 6, 'MaterialCode', 'Material Code');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 7, 'MaterialDescription', 'Material Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 8, 'Quantity', 'Quantity');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 9, 'UoM', 'Unit of Measurement');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 10, 'Batch', 'Batch');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 11, 'BatchVendor', 'Batch Vendor');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 12, 'DocumentDate', 'Document Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 13, 'ProductionDate', 'Production Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 14, 'ExpiredDate', 'Expired Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 15, 'Plant', 'Plant');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(100, 16, 'Warehouse', 'Warehouse');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 1, 'DocumentNo', 'Document No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 2, 'LineNo', 'Line No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 3, 'MaterialCode', 'Material Code');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 4, 'MaterialDescription', 'Material Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 5, 'Quantity', 'Quantity');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 6, 'UoM', 'Unit of Measurement');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 7, 'Batch', 'Batch');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 8, 'BatchVendor', 'Batch Vendor');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 9, 'DocumentDate', 'Document Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 10, 'Plant', 'Plant');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 11, 'Warehouse', 'Warehouse');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 12, 'ToPlant', 'To Plant');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(200, 13, 'ToWarehouse', 'To Warehouse');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 1, 'LineNo', 'Line No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 2, 'MaterialCode', 'MaterialCode');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 3, 'MaterialDescription', 'Material Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 4, 'Quantity', 'Quantity');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 5, 'UoM', 'Unit of Measurement');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 6, 'Batch', 'Batch');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 7, 'ProductionDate', 'Production Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 8, 'Plant', 'Plant');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 9, 'Warehouse', 'Warehouse');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 10, 'WorkOrder', 'Work Order');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 11, 'RM_MaterialCode', 'RM Material Code');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 12, 'RM_MaterialDescription', 'RM Material Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 13, 'RM_Batch', 'RM Batch');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 14, 'RM_Quantity', 'RM_Quantity');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(300, 15, 'RM_UOM', 'RM Unit of Measurement');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 1, 'DocumentNo', 'Document No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 2, 'LineNo', 'Line No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 3, 'MaterialCode', 'Material Code');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 4, 'MaterialDescription', 'Material Name');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 5, 'Quantity', 'Quantity');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 6, 'UoM', 'Unit of Measurement');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 7, 'Batch', 'Batch');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 8, 'ProductionDate', 'Production Date');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 9, 'Plant', 'Plant');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 10, 'Warehouse', 'Warehouse');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 11, 'SalesOrder', 'Sales Order');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 12, 'Sales_LineNo', 'Sales Line No.');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 13, 'CustomerID', 'CustomerID');
+INSERT INTO `mstr_query` (`Step_ID`, `Seq_No`, `Filed`, `Alias`) VALUES
+	(400, 14, 'CustomerName', 'Customer Name');
 /*!40000 ALTER TABLE `mstr_query` ENABLE KEYS */;
 
 -- Dumping structure for table powerbitable.mstr_step
