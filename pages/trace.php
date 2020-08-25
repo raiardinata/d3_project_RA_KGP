@@ -93,6 +93,10 @@
                         <label style="width: 150px; color: #5F5F60">Batch</label>
                         <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
+                    <td>
+                        <label style="width: 150px; color: #5F5F60">Material Code</label>
+                        <label style="width: 150px; color: #5F5F60">Batch</label>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -109,7 +113,7 @@
         <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
             <div class="row" style="margin-right: 0px;">
                 <!-- Trace-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%; padding-top: 10px; padding-bottom: 10px;">
                     <svg id="viz" width="100%" height="300px"></svg>
                     <script src="../js/index.js"></script>
                 </div>

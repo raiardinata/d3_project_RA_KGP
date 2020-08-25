@@ -233,7 +233,6 @@ function generateDynamicTable(rawArray, Step_ID) {
         jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : '', Step_ID : step, Alias : true }, async: false, success: function (data) { result = data; } }); return result; } });
         var aliasRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
         aliasRess = JSON.parse(aliasRess);
-        debugger;
         for(var i in aliasRess.alias_array) {
             colUser.push(aliasRess.alias_array[i]);
         }
