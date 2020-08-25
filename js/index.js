@@ -34,6 +34,11 @@ function generate_simulation() {
         });
     });
 
+    // A scale that gives a X target position for each group
+    var x = d3.scaleOrdinal()
+        .domain([1, 2, 3, 4])
+        .range([50, 200, 340, 500]);
+
     var labelLayout = d3.forceSimulation(label.nodes)
         .force("charge", d3.forceManyBody().strength(-1000))
         .force("x", d3.forceX(250))
@@ -43,7 +48,7 @@ function generate_simulation() {
     var graphLayout = d3.forceSimulation(graph.nodes)
         .force("charge", d3.forceManyBody().strength(-2000).distanceMax(-2000).distanceMin(-80))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("x", d3.forceX(width / 2))
+        .force("x", d3.forceX().strength(0.5).x( function(d){ return x(d.group) } ))
         .force("y", d3.forceY(height / 2))
         .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(200).strength(1))
         .on("tick", ticked);
