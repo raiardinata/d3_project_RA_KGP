@@ -198,17 +198,17 @@ function generate_simulation() {
 
 function generateDynamicTable(rawArray, Step_ID) {
     var graphTable = [];
+    var graphAlias = [];
     $('[id=\'' + Step_ID + '\']').remove();
 
     rawArray.forEach(element => {
-        jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : element['id'], Step_ID : element['group'] }, async: false, success: function (data) { result = data; } }); return result; } });
+        jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : element['id'], Step_ID : element['group'], Alias : false }, async: false, success: function (data) { result = data; } }); return result; } });
         var graphRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
         graphRess = JSON.parse(graphRess);
-        for(var i in graphRess) {
-            graphTable.push(graphRess[i]);
+        for(var i in graphRess.row_array) {
+            graphTable.push(graphRess.row_array[i]);
         }
     });
-    
     var graphLength = graphTable.length;
     var h4 = document.createElement('H4');
     h4.setAttribute('id', Step_ID);
@@ -227,8 +227,17 @@ function generateDynamicTable(rawArray, Step_ID) {
         table.setAttribute('id', Step_ID);
 
         // retrieve column header ('Name', 'Email', and 'Mobile')
+        var colUser = []; // define user header
+        var col = []; // define original field header
+        var step = Step_ID.substring(5);
+        jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : '', Step_ID : step, Alias : true }, async: false, success: function (data) { result = data; } }); return result; } });
+        var aliasRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_table.php');
+        aliasRess = JSON.parse(aliasRess);
+        debugger;
+        for(var i in aliasRess.alias_array) {
+            colUser.push(aliasRess.alias_array[i]);
+        }
 
-        var col = []; // define an empty array
         for (var i = 0; i < graphLength; i++) {
             for (var key in graphTable[i]) {
                 if (col.indexOf(key) === -1) {
@@ -246,9 +255,9 @@ function generateDynamicTable(rawArray, Step_ID) {
         var hRow = document.createElement("tr");
 
         // ADD COLUMN HEADER TO ROW OF TABLE HEAD.
-        for (var i = 0; i < col.length; i++) {
+        for (var i = 0; i < colUser.length; i++) {
             var th = document.createElement("th");
-            th.innerHTML = col[i];
+            th.innerHTML = colUser[i];
             hRow.appendChild(th);
         }
         tHead.appendChild(hRow);

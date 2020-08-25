@@ -52,16 +52,16 @@
 </head>
 
 <body id="page-top">
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #0288d1;">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="color: #0288d1;">Traceability System</a>
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #00be71;">
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="color: #31a073;">Traceability System</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><label class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" id="username" style="padding: 16px; color: #ffeb3b;"></label>
+                    <li class="nav-item mx-0 mx-lg-1"><label class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" id="username" style="padding: 16px; color: #5f5f5f;"></label>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="home.php" style="color: #0288d1;">Home</a>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="home.php" style="color: #5f5f5f;">Home</a>
                     </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="trace.php" style="color: #0288d1;">Traceability</a>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="trace.php" style="color: #5f5f5f;">Traceability</a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" style="color: red;" id="signout">Sign Out</a>
                     </li>
