@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.4.11-MariaDB - mariadb.org binary distribution
+-- Server version:               10.4.13-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
 -- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `material_inventorytransfer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table powerbitable.material_inventorytransfer: ~1 rows (approximately)
+-- Dumping data for table powerbitable.material_inventorytransfer: ~0 rows (approximately)
 /*!40000 ALTER TABLE `material_inventorytransfer` DISABLE KEYS */;
 INSERT INTO `material_inventorytransfer` (`id`, `date_entered`, `date_modified`, `materialid`, `invtransferid`) VALUES
 	('cc739fb7-99ad-11ea-bbdc-bcee7b513d25', '2020-05-19 15:50:32', NULL, 'b7eeca72-99aa-11ea-bbdc-bcee7b513d25', 'e0ca32f1-99aa-11ea-bbdc-bcee7b513d25');
@@ -99,6 +99,23 @@ INSERT INTO `mstr_node` (`Step_ID`, `Prod_Grp`, `Key`, `Description`) VALUES
 INSERT INTO `mstr_node` (`Step_ID`, `Prod_Grp`, `Key`, `Description`) VALUES
 	(400, 'A', 'P0100', 'Pengiriman');
 /*!40000 ALTER TABLE `mstr_node` ENABLE KEYS */;
+
+-- Dumping structure for table powerbitable.mstr_prd_info
+CREATE TABLE IF NOT EXISTS `mstr_prd_info` (
+  `materialCode` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `additionalInfo` varchar(255) DEFAULT NULL,
+  `imageData` mediumblob NOT NULL,
+  `imageType` varchar(25) NOT NULL DEFAULT '',
+  `imageId` varchar(255) NOT NULL DEFAULT uuid(),
+  PRIMARY KEY (`imageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table powerbitable.mstr_prd_info: ~0 rows (approximately)
+/*!40000 ALTER TABLE `mstr_prd_info` DISABLE KEYS */;
+INSERT INTO `mstr_prd_info` (`materialCode`, `description`, `additionalInfo`, `imageData`, `imageType`, `imageId`) VALUES
+	('121001055', 'Garam Samudra', '20gr 2020', _binary 0x2E2E2F696D616765732F7072645F696D672F476172616D5F53616D756472612E6A7067, 'image/jpeg', '5e882fed-e757-11ea-bfdb-2089849f1c11');
+/*!40000 ALTER TABLE `mstr_prd_info` ENABLE KEYS */;
 
 -- Dumping structure for table powerbitable.mstr_query
 CREATE TABLE IF NOT EXISTS `mstr_query` (
@@ -320,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `split_invtrans_rel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table powerbitable.split_invtrans_rel: ~2 rows (approximately)
+-- Dumping data for table powerbitable.split_invtrans_rel: ~3 rows (approximately)
 /*!40000 ALTER TABLE `split_invtrans_rel` DISABLE KEYS */;
 INSERT INTO `split_invtrans_rel` (`id`, `date_entered`, `date_modified`, `splitid`, `invtransid`) VALUES
 	('311b710e-99ae-11ea-bbdc-bcee7b513d25', '2020-05-19 15:53:21', NULL, 'e0ca32f1-99aa-11ea-bbdc-bcee7b513d25', '351aa2fd-99ad-11ea-bbdc-bcee7b513d25');
@@ -341,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `split_inv_transfer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table powerbitable.split_inv_transfer: ~4 rows (approximately)
+-- Dumping data for table powerbitable.split_inv_transfer: ~3 rows (approximately)
 /*!40000 ALTER TABLE `split_inv_transfer` DISABLE KEYS */;
 INSERT INTO `split_inv_transfer` (`id`, `split_name`, `date_entered`, `date_modified`, `split_qty`, `description`) VALUES
 	('351aa2fd-99ad-11ea-bbdc-bcee7b513d25', 'Split Inv. Trans. A.1', '2020-05-19 15:46:18', NULL, 5, 'Transfer Split A.1 Material A to Production Site A');
@@ -483,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table powerbitable.users: ~1 rows (approximately)
+-- Dumping data for table powerbitable.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `password`) VALUES
 	('1', 'admin', 'admin');

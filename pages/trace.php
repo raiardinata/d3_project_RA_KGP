@@ -51,7 +51,7 @@
         }
         svg {
             width: 100%;
-            height: 300px;
+            height: 200px;
         }
         .node {
             pointer-events: all;
@@ -93,8 +93,12 @@
                         <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
                         <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
-                    <td rowspan="2" style="text-align: left; padding-left: 50px; width: 50%; border: solid;">
-                        <label style="width: 150px; color: #5F5F60">Detail Material and Batch Panel</label>
+                    <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
+                        <label style="width: auto; color: #5F5F60" id="lblMtcd" style="white-space: nowrap;"></label><br/>
+                        <label style="width: auto; color: #5F5F60" id="lblDesc" style="white-space: nowrap;"></label>
+                    </td>
+                    <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
+                        <img id="image" src="" style="border-radius: 50%; max-width: 70px;"/>
                     </td>
                 </tr>
                 <tr>
@@ -113,7 +117,7 @@
             <div class="row" style="margin-right: 0px;">
                 <!-- Trace-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%; padding-top: 10px; padding-bottom: 10px;">
-                    <svg id="viz" width="100%" height="300px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
+                    <svg id="viz" width="100%" height="200px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
                     <script src="../js/index.js"></script>
                 </div>
                 <!-- Detail panel-->

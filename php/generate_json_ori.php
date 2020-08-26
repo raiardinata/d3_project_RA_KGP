@@ -37,12 +37,8 @@ function loop_nodes($a, $b, $c)
                 OR	(Z.RM_MaterialCode='$a' AND Z.RM_Batch = '$b')
                 OR	(D.MaterialCode='$a' AND D.Batch = '$b')
             )
-            AND a.Step_ID IS NOT NULL
-            AND b.Step_ID IS NOT NULL
-            AND c.Step_ID IS NOT NULL
-            AND d.Step_ID IS NOT NULL
         GROUP BY
-            a.Step_ID, b.Step_ID, c.Step_ID, d.Step_ID
+            U1, U2 ,U3, U5
     ";
 
     $i = 0;

@@ -11,7 +11,7 @@ function generate_simulation() {
     const batc = $('[id=\'inputBatch\']').val();
     tableArray = [];
 
-    //generate linear json file
+    //generate json file
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
     var graph = JSON.parse(reqResult);
@@ -25,23 +25,13 @@ function generate_simulation() {
     };
 
     graph.nodes.forEach(function (d, i) {
+        tableArray.push( d );
         label.nodes.push({ node: d });
         label.nodes.push({ node: d });
         label.links.push({
             source: i * 2,
             target: i * 2 + 1
         });
-    });
-
-    //generate full json file
-    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
-    reqFullResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json_ori.php');
-    var graphFull = JSON.parse(reqFullResult);
-    if(!graphFull) {
-        alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
-    }
-    graphFull.nodes.forEach(function (d, i) {
-        tableArray.push( d );
     });
 
     // A scale that gives a X target position for each group
@@ -51,9 +41,6 @@ function generate_simulation() {
 
     var labelLayout = d3.forceSimulation(label.nodes)
         .force("charge", d3.forceManyBody().strength(-1000))
-        .force('collision', d3.forceCollide().radius(function(d) {
-            return 80
-          }))
         .force("x", d3.forceX(250))
         .force("y", d3.forceY(0))
         .force("link", d3.forceLink(label.links).distance(2).strength(2));
@@ -61,9 +48,6 @@ function generate_simulation() {
     var graphLayout = d3.forceSimulation(graph.nodes)
         .force("charge", d3.forceManyBody().strength(-2000).distanceMax(-2000).distanceMin(-80))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force('collision', d3.forceCollide().radius(function(d) {
-            return 20
-          }))
         .force("x", d3.forceX().strength(0.5).x( function(d){ return x(d.group) } ))
         .force("y", d3.forceY(height / 2))
         .force("link", d3.forceLink(graph.links).id(function (d) { return d.id; }).distance(200).strength(1))
@@ -348,22 +332,4 @@ $('[id=\'btnSearch\']').on('click', function () {
     generateDynamicTable(Step300, 'Step_300');
     var Step400 = tableArray.filter(generateArray400);
     generateDynamicTable(Step400, 'Step_400');
-
-    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd }, async: false, success: function (data) { result = data; } }); return result; } });
-    var prdInfoRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/get_mstr_prd_info.php');
-    prdInfoRess = JSON.parse(prdInfoRess);
-    $('#lblMtcd').html( function() {
-        if(prdInfoRess.description != null) {
-            return prdInfoRess.materialCode + ' - ' + prdInfoRess.description;
-        }
-        else {
-            return prdInfoRess.materialCode;
-        }
-    });
-    $('#lblDesc').html( function() {
-        if(prdInfoRess.additionalInfo != null) {
-            return prdInfoRess.additionalInfo;
-        }
-    });
-    $('#image').attr( 'src', prdInfoRess.imageData );
 });
