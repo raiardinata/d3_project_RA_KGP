@@ -1,7 +1,7 @@
 <?php
     include 'db_conn.php';
-    // $mtcd = $_POST['mtcd'];
-    $mtcd = '121001055';
+    $mtcd = $_POST['mtcd'];
+    // $mtcd = '121001055';
 
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
