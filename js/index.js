@@ -15,8 +15,9 @@ function generate_simulation() {
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
     var graph = JSON.parse(reqResult);
-    if(!graph) {
+    if(graph.nodes.length == 0) {
         alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
+        return false;
     }
     
     var label = {
@@ -120,7 +121,14 @@ function generate_simulation() {
         .enter()
         .append("text")
         .attr("id", function(d,i) { return i % 2 == 0 ? "" : "txt" + d.node.id} )
-        .text(function (d, i) { return i % 2 == 0 ? "" : d.node.description + ' \n(' + d.node.material + ')'; })
+        .text(function (d, i) {
+            if(d.node.description != "Produksi") {
+                return i % 2 == 0 ? "" : d.node.description ; 
+            }
+            else {
+                return i % 2 == 0 ? "" : d.node.description + ' \n(' + d.node.key + ')'
+            }
+        })
         .style("fill", "#555")
         .style("font-family", "Arial")
         .style("font-size", '1rem')
@@ -164,7 +172,7 @@ function generate_simulation() {
     function focus(d) {
         var index = d3.select(d3.event.target).datum().index;
         node.style("opacity", function (o) {
-            return neigh(index, o.index) ? 1 : 0.1;
+            return neigh(index, o.index) ? 1 : 0.3;
         });
         labelNode.attr("display", function (o) {
             return neigh(index, o.node.index) ? "block" : "none";
@@ -215,6 +223,25 @@ function generate_simulation() {
         d.fx = null;
         d.fy = null;
     }
+
+    //bind mstr prd info
+    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd }, async: false, success: function (data) { result = data; } }); return result; } });
+    var prdInfoRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/get_mstr_prd_info.php');
+    prdInfoRess = JSON.parse(prdInfoRess);
+    $('#lblMtcd').html( function() {
+        if(prdInfoRess.description != null) {
+            return prdInfoRess.materialCode + ' - ' + prdInfoRess.description;
+        }
+        else {
+            return prdInfoRess.materialCode;
+        }
+    });
+    $('#lblDesc').html( function() {
+        if(prdInfoRess.additionalInfo != null) {
+            return prdInfoRess.additionalInfo;
+        }
+    });
+    $('#imageColumn').prepend($('<img>',{id: 'image',src: prdInfoRess.imageData, style: 'border-radius: 50%; max-width: 70px;' }));
 }
 
 function generateDynamicTable(rawArray, Step_ID) {
@@ -239,13 +266,14 @@ function generateDynamicTable(rawArray, Step_ID) {
 
 
         // CREATE DYNAMIC TABLE.
-        var table = document.createElement("table");
+        var table = document.createElement("table")
         table.setAttribute('width', 'auto');
         table.setAttribute('max-width', '400%');
         table.setAttribute('border', '1');
         table.setAttribute('cellspacing', '0');
         table.setAttribute('cellpadding', '5');
         table.setAttribute('white-space', 'nowrap;');
+        table.setAttribute('class', 'display');
         table.setAttribute('id', Step_ID);
 
         // retrieve column header ('Name', 'Email', and 'Mobile')
@@ -312,6 +340,13 @@ function generateDynamicTable(rawArray, Step_ID) {
         divContainer.appendChild(h4);
         divContainer.appendChild(table);
         $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
+
+        $('[class=\'display\']').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
     }
 }
 
@@ -322,12 +357,16 @@ function generateTableQuery(mtcd, batc, step) {
 }
 
 $('[id=\'btnSearch\']').on('click', function () {
+    //remove unnecessary things
     $('[id=\'forceSimulationG\']').remove();
+    $('#lblMtcd').html( '' );
+    $('#lblDesc').html( '' );
+    $('#image').remove();
+
+    //generate d3 force
     generate_simulation();
 
-    const mtcd = $('[id=\'inputMaterialcode\']').val();
-    const batc = $('[id=\'inputBatch\']').val();
-   
+    // generate table info
     function generateArray100(array) {
         return array['group'] == 100;
     }
@@ -348,22 +387,4 @@ $('[id=\'btnSearch\']').on('click', function () {
     generateDynamicTable(Step300, 'Step_300');
     var Step400 = tableArray.filter(generateArray400);
     generateDynamicTable(Step400, 'Step_400');
-
-    jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd }, async: false, success: function (data) { result = data; } }); return result; } });
-    var prdInfoRess = $.getValues(base_url + '/KGP_Test/d3_prototype/php/get_mstr_prd_info.php');
-    prdInfoRess = JSON.parse(prdInfoRess);
-    $('#lblMtcd').html( function() {
-        if(prdInfoRess.description != null) {
-            return prdInfoRess.materialCode + ' - ' + prdInfoRess.description;
-        }
-        else {
-            return prdInfoRess.materialCode;
-        }
-    });
-    $('#lblDesc').html( function() {
-        if(prdInfoRess.additionalInfo != null) {
-            return prdInfoRess.additionalInfo;
-        }
-    });
-    $('#image').attr( 'src', prdInfoRess.imageData );
 });

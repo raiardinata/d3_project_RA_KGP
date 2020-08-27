@@ -9,12 +9,13 @@
     <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="../js/all.min.js" crossorigin="anonymous"></script>
+    <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
+    <script src="../js/d3_v5.js" charset="utf-8"></script>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/DataTables/dataTables.bootstrap4.min.css">
     <!--===============================================================================================-->
-    <script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="../js/d3_v5.js" charset="utf-8"></script>
     <script>
         $(document).ready(function(){
             var base_url = window.origin;
@@ -26,6 +27,8 @@
             });
         });
     </script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/dataTables.bootstrap4.min.js"></script>
     <!--===============================================================================================-->
     <style>
         .flex-container {
@@ -90,21 +93,21 @@
                 <tr>
                     <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Material Code</label>
-                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="121001055" style="width: 150px;">
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="8994016003525" style="width: 150px;">
                         <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
                     <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
                         <label style="width: auto; color: #5F5F60" id="lblMtcd" style="white-space: nowrap;"></label><br/>
                         <label style="width: auto; color: #5F5F60" id="lblDesc" style="white-space: nowrap;"></label>
                     </td>
-                    <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
-                        <img id="image" src="" style="border-radius: 50%; max-width: 70px;"/>
+                    <td id=imageColumn rowspan="2" style="text-align: left; width: 25%; border: solid;">
+                        
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Batch</label>
-                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="20191003" style="width: 150px;">
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="0207MC02" style="width: 150px;">
                         <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>
@@ -162,7 +165,6 @@
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
     <!-- Bootstrap core JS-->
-    <script src="../js/jquery-3.5.1.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
     <script src="../js/jquery.easing.min.js"></script>

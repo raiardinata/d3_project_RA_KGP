@@ -27,7 +27,7 @@ function loop_nodes($a, $b, $c)
         LEFT JOIN tbl_transaksi b ON a.MaterialCode = b.MaterialCode AND a.Batch = b.Batch AND b.Step_ID = 200
         LEFT JOIN tbl_transaksi c ON c.RM_MaterialCode = b.MaterialCode AND c.RM_Batch = b.Batch AND c.RM_Quantity = b.Quantity AND c.Step_ID = 300
         LEFT JOIN tbl_transaksi z ON z.RM_MaterialCode = c.MaterialCode AND z.RM_Batch = c.Batch AND c.RM_Quantity = b.Quantity AND  z.Step_ID = 300
-        LEFT JOIN tbl_transaksi d ON d.MaterialCode = z.MaterialCode AND d.Batch = z.Batch AND d.Step_ID = 400
+        LEFT JOIN tbl_transaksi d ON d.MaterialCode = IF(z.MaterialCode IS NOT NULL, z.MaterialCode, c.MaterialCode) AND d.Batch = IF(z.Batch IS NOT NULL, z.Batch, c.Batch) AND d.Step_ID = 400
         WHERE
             a.Step_ID = 100 
             AND ( 
@@ -74,6 +74,15 @@ function loop_nodes($a, $b, $c)
                     ]
                 );
             }
+            if($row['U3'] && $row['U5'] && is_null($row['U4'])) {
+                array_push($link_array['links'], 
+                    [
+                        'source'=>$row['U3'],
+                        'target'=>$row['U5'],
+                        'value' => $i + 1
+                    ]
+                );
+            }
             if($row['U4'] && $row['U5']) {
                 array_push($link_array['links'], 
                     [
@@ -108,6 +117,15 @@ function loop_nodes($a, $b, $c)
                     [
                         'source'=>$row['U3'],
                         'target'=>$row['U4'],
+                        'value' => $i + 1
+                    ]
+                );
+            }
+            if($row['U3'] && $row['U5'] && !$row['U4']) {
+                array_push($link_array['links'], 
+                    [
+                        'source'=>$row['U3'],
+                        'target'=>$row['U5'],
                         'value' => $i + 1
                     ]
                 );
@@ -205,7 +223,8 @@ foreach($nodesArray as $nodes) {
                             'description' => $row['Description'],
                             'material' => $row['MaterialDescription'],
                             'material_code' => $row['MaterialCode'],
-                            'batch' => $row['Batch']
+                            'batch' => $row['Batch'],
+                            'key' => $row['Key']
                         ]
                     ]
                 ];
@@ -218,7 +237,8 @@ foreach($nodesArray as $nodes) {
                     'description' => $row['Description'],
                     'material' => $row['MaterialDescription'],
                     'material_code' => $row['MaterialCode'],
-                    'batch' => $row['Batch']
+                    'batch' => $row['Batch'],
+                    'key' => $row['Key']
                 ]
             );
             }

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <!--===============================================================================================-->
-    <script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
             var base_url = window.origin;

@@ -40,7 +40,7 @@
     if($alias == 0) {
         // push data by step
         $field_query = "
-            SELECT GROUP_CONCAT(Filed) as Field FROM mstr_query WHERE Step_ID = '$step' LIMIT 1
+            SELECT GROUP_CONCAT(Filed) as Field FROM mstr_query WHERE Step_ID = '$step' ORDER BY Seq_No
         ";
         $field_res = mysqli_query($conn, $field_query);
         $field_row = mysqli_fetch_assoc($field_res);
