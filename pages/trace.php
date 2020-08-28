@@ -123,16 +123,16 @@
     </header>
 
     <section>
-        <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; max-width: 100%;">
+        <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; min-width: 100%;">
             <div class="row" style="margin-right: 0px;">
                 <!-- Trace-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;max-width: 100%; padding-top: 10px; padding-bottom: 10px;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;min-width: 100%; padding-top: 10px; padding-bottom: 10px;">
                     <svg id="viz" width="100%" height="200px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
                     <script src="../js/index.js"></script>
                 </div>
                 <!-- Detail panel-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; max-width: 100%; padding-right: 0px; height: 400px; overflow: scroll;">
-                    <div id="detailTable" style="width: auto;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; min-width: 100%; padding-right: 0px; min-height: 400px;">
+                    <div id="detailTable" style="min-width: 100%; height: 500px; overflow: scroll; padding-left: 10px;">
                         <font size="2" id="font">
                         </font>
                     </div>
@@ -162,7 +162,7 @@
         </div>
     </footer>
 -->
-    <footer style="position: relative; left: 0; bottom: 0; width: 100%; text-align: center;">
+    <footer style="position: relative; left: 0; bottom: 0; min-width: 100%; text-align: center;">
         <!-- Copyright Section-->
         <section class="copyright py-4 text-center text-white">
             <div class="container"><small class="pre-wrap" style="font-weight: bold;">Copyright © Traceability System 2020</small></div>

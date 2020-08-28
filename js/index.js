@@ -247,6 +247,7 @@ function generate_simulation() {
 function generateDynamicTable(rawArray, Step_ID) {
     var graphTable = [];
     $('[id=\'' + Step_ID + '\']').remove();
+    $('[id=\'' + Step_ID + '_wrapper\']').remove();
 
     rawArray.forEach(element => {
         jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { id : element['id'], Step_ID : element['group'], Alias : false }, async: false, success: function (data) { result = data; } }); return result; } });
@@ -342,11 +343,13 @@ function generateDynamicTable(rawArray, Step_ID) {
         $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
 
         $('[class=\'display\']').DataTable( {
-            dom: 'Bfrltip',
+            dom: '<Bf<t>ip><l>',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
         } );
+        $('[id=\'' + Step_ID + '_info\']').attr('style', 'display: inline');
+        $('[id=\'' + Step_ID + '_paginate\']').attr('style', 'display: inline-flex; float: right;');
     }
 }
 
