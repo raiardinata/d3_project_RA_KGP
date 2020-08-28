@@ -344,7 +344,7 @@ function generateDynamicTable(rawArray, Step_ID) {
         $('[class=\'display\']').DataTable( {
             dom: 'Bfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf'
             ]
         } );
     }

@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <link rel="stylesheet" type="text/css" href="../css/DataTables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/DataTables/buttons.dataTables.min.css">
     <!--===============================================================================================-->
     <script>
         $(document).ready(function(){
@@ -29,6 +30,12 @@
     </script>
     <script type="text/javascript" charset="utf8" src="../js/DataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="../js/DataTables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/jszip.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/pdfmake.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/vfs_fonts.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/buttons.html5.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../js/DataTables/buttons.print.min.js"></script>
     <!--===============================================================================================-->
     <style>
         .flex-container {
@@ -124,8 +131,8 @@
                     <script src="../js/index.js"></script>
                 </div>
                 <!-- Detail panel-->
-                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; max-width: 100%; padding-right: 0px;">
-                    <div id="detailTable" style="width: 100%; height: 400px; overflow-y: scroll;">
+                <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; max-width: 100%; padding-right: 0px; height: 400px; overflow: scroll;">
+                    <div id="detailTable" style="width: auto;">
                         <font size="2" id="font">
                         </font>
                     </div>
