@@ -342,7 +342,7 @@ function generateDynamicTable(rawArray, Step_ID) {
         $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
 
         $('[class=\'display\']').DataTable( {
-            dom: 'Bfrtip',
+            dom: 'Bfrltip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ]
