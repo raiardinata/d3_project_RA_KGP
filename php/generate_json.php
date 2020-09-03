@@ -2,8 +2,8 @@
 include 'db_conn.php';
 $matcd = $_POST['mtcd'];
 $batch = $_POST['batc'];
-// $matcd = '121001055';
-// $batch = '20191003';
+// $matcd = '8994016003525';
+// $batch = '0207MC02';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -18,16 +18,17 @@ function loop_nodes($a, $b, $c)
     $link_array = [];
     $trans_query = "
         SELECT
-        a.UUID U1, a.MaterialDescription s1, a.RM_MaterialDescription rs1, a.Step_ID
-        , B.UUID U2, b.MaterialDescription s2, b.RM_MaterialDescription rs2, b.Step_ID
-        , C.UUID U3, c.MaterialDescription s3, c.RM_MaterialDescription rs3, c.Step_ID
-        , Z.UUID U4, z.MaterialDescription s4, z.RM_MaterialDescription rs4, z.Step_ID
-        , D.UUID U5, d.MaterialDescription s5, d.RM_MaterialDescription rs5, d.Step_ID, d.CustomerName
-        FROM tbl_transaksi a
-        LEFT JOIN tbl_transaksi b ON a.MaterialCode = b.MaterialCode AND a.Batch = b.Batch AND b.Step_ID = 200
-        LEFT JOIN tbl_transaksi c ON c.RM_MaterialCode = b.MaterialCode AND c.RM_Batch = b.Batch AND c.RM_Quantity = b.Quantity AND c.Step_ID = 300
-        LEFT JOIN tbl_transaksi z ON z.RM_MaterialCode = c.MaterialCode AND z.RM_Batch = c.Batch AND c.RM_Quantity = b.Quantity AND  z.Step_ID = 300
-        LEFT JOIN tbl_transaksi d ON d.MaterialCode = IF(z.MaterialCode IS NOT NULL, z.MaterialCode, c.MaterialCode) AND d.Batch = IF(z.Batch IS NOT NULL, z.Batch, c.Batch) AND d.Step_ID = 400
+            a.UUID U1, a.MaterialDescription s1, a.RM_MaterialDescription rs1, a.Step_ID
+            , B.UUID U2, b.MaterialDescription s2, b.RM_MaterialDescription rs2, b.Step_ID
+            , C.UUID U3, c.MaterialDescription s3, c.RM_MaterialDescription rs3, c.Step_ID
+            , Z.UUID U4, z.MaterialDescription s4, z.RM_MaterialDescription rs4, z.Step_ID
+            , D.UUID U5, d.MaterialDescription s5, d.RM_MaterialDescription rs5, d.Step_ID, d.CustomerName
+        FROM
+            tbl_transaksi a
+            LEFT JOIN tbl_transaksi b ON a.MaterialCode = b.MaterialCode AND a.Batch = b.Batch AND b.Step_ID = 200
+            LEFT JOIN tbl_transaksi c ON c.RM_MaterialCode = b.MaterialCode AND c.RM_Batch = b.Batch AND c.RM_Quantity = b.Quantity AND c.Step_ID = 300
+            LEFT JOIN tbl_transaksi z ON z.RM_MaterialCode = c.MaterialCode AND z.RM_Batch = c.Batch AND c.RM_Quantity = b.Quantity AND  z.Step_ID = 300
+            LEFT JOIN tbl_transaksi d ON d.MaterialCode = IF(z.MaterialCode IS NOT NULL, z.MaterialCode, c.MaterialCode) AND d.Batch = IF(z.Batch IS NOT NULL, z.Batch, c.Batch) AND d.Step_ID = 400
         WHERE
             a.Step_ID = 100 
             AND ( 

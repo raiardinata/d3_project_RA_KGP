@@ -130,6 +130,7 @@
                     <svg id="viz" width="100%" height="200px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
                     <script src="../js/index.js"></script>
                 </div>
+                <div id="button"></div>
                 <!-- Detail panel-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; min-width: 100%; padding-right: 0px; min-height: 400px;">
                     <div id="detailTable" style="min-width: 100%; height: 500px; overflow: scroll; padding-left: 10px;">
