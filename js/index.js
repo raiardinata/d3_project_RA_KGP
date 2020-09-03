@@ -341,11 +341,15 @@ function generateDynamicTable(rawArray, Step_ID) {
         divContainer.appendChild(h4);
         divContainer.appendChild(table);
         $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
+        if(rawArray[0]['description'] != 'Inbound') {
+            $('[id=\'' + Step_ID + '\']H4').css('padding-top', '10px');
+            $('[id=\'' + Step_ID + '\']H4').css('border-top', 'solid');
+        }
 
         $('[class=\'display\']').DataTable( {
             dom: '<Bf<t>ip><l>',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'excel'
             ]
         } );
         $('[id=\'' + Step_ID + '_info\']').attr('style', 'display: inline');
