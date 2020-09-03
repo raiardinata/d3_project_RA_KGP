@@ -260,7 +260,7 @@ function generateDynamicTable(rawArray, Step_ID) {
     var graphLength = graphTable.length;
     var h4 = document.createElement('H4');
     h4.setAttribute('id', Step_ID);
-    h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +';');//color(d.group)
+    h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +'; display: inline; float: left;');//color(d.group)
 
 
     if (graphLength > 0) {
@@ -337,21 +337,7 @@ function generateDynamicTable(rawArray, Step_ID) {
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
         var divContainer = document.getElementById("font");
-        // divContainer.innerHTML = Step_ID;
-        divContainer.appendChild(h4);
         divContainer.appendChild(table);
-        $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
-        if(rawArray[0]['description'] != 'Inbound') {
-            $('[id=\'' + Step_ID + '\']H4').css('padding-top', '10px');
-            $('[id=\'' + Step_ID + '\']H4').css('border-top', 'solid');
-        }
-
-        // $('[class=\'display\']').DataTable( {
-        //     dom: '<Bf<t>ip><l>',
-        //     buttons: [
-        //         'copy', 'csv', 'excel', 'pdf', 'print'
-        //     ]
-        // } );
 
         function getHeaderNames(table) {
             // Gets header names.
@@ -529,32 +515,9 @@ function generateDynamicTable(rawArray, Step_ID) {
 
         var table = $('[class=\'display\']').DataTable({
             dom: '<f<t>ip><l>'
-            // buttons: [
-            //     {
-            //         extend: 'excelHtml5',
-            //         text: 'Export to Excel',
-            //         customize: function( xlsx ) {
-            //             setSheetName(xlsx, 'Inbound');
-            //             var i = 1;
-            //             $('#detailTable table').each(function(){ 
-            //                 i++;
-            //                 switch(i) {
-            //                     case 2:
-            //                         addSheet(xlsx, '#Step_200.display', 'Traceability System Home', 'Transfer', '2');
-            //                         break;
-            //                     case 3:
-            //                         addSheet(xlsx, '#Step_300.display', 'Traceability System Home', 'Production', '3');
-            //                       break;
-            //                     case 4:
-            //                         addSheet(xlsx, '#Step_400.display', 'Traceability System Home', 'Outbond', '4');
-            //                 }
-            //              });
-            //         }
-            //     }
-            // ]
         });
         
-        $('#excelButton').remove();
+        $('#excelButton').parent().remove();
         var buttons = new $.fn.dataTable.Buttons(table, {
             buttons: [
                 {
@@ -584,6 +547,10 @@ function generateDynamicTable(rawArray, Step_ID) {
 
         $('[id=\'' + Step_ID + '_info\']').attr('style', 'display: inline');
         $('[id=\'' + Step_ID + '_paginate\']').attr('style', 'display: inline-flex; float: right;');
+        var tableFilter = document.getElementById(Step_ID + '_filter');
+        tableFilter.appendChild(h4);
+        $('[id=\'' + Step_ID + '\']H4').text(rawArray[0]['description']);
+        $('[id=\'' + Step_ID + '_wrapper\']').css('padding-top', '20px');
     }
 }
 
