@@ -1,0 +1,57 @@
+WITH RECURSIVE tbl_transaksiINB AS(
+	SELECT 
+		MaterialCode, MaterialDescription, 
+		Batch, RM_MaterialCode, 
+		RM_MaterialDescription, RM_Batch, 
+		CustomerID, CustomerName,
+		b.Description, b.Step_ID
+	FROM 
+		tbl_transaksi a
+		JOIN mstr_step b ON b.Step_ID = a.Step_ID
+	WHERE MaterialCode = '8994016003525' AND Batch = '0207MC02'
+	
+	UNION
+	
+	SELECT 
+		tbl_ts.MaterialCode, tbl_ts.MaterialDescription, 
+		tbl_ts.Batch, tbl_ts.RM_MaterialCode, 
+		tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch, 
+		tbl_ts.CustomerID, tbl_ts.CustomerName,
+		e.Description, e.Step_ID
+	FROM
+		tbl_transaksiINB cte
+		INNER JOIN tbl_transaksi tbl_ts
+			ON tbl_ts.RM_MaterialCode = cte.MaterialCode AND tbl_ts.RM_Batch = cte.Batch
+      INNER JOIN mstr_step e 
+			ON e.Step_ID = tbl_ts.Step_ID
+), tbl_transaksiPRD AS(
+	SELECT 
+		MaterialCode, MaterialDescription, 
+		Batch, RM_MaterialCode, 
+		RM_MaterialDescription, RM_Batch, 
+		CustomerID, CustomerName,
+		b.Description, b.Step_ID
+	FROM 
+		tbl_transaksi a
+		JOIN mstr_step b ON b.Step_ID = a.Step_ID
+	WHERE MaterialCode = '8994016003525' AND Batch = '0207MC02'
+	
+	UNION
+	
+	SELECT 
+		tbl_ts.MaterialCode, tbl_ts.MaterialDescription, 
+		tbl_ts.Batch, tbl_ts.RM_MaterialCode, 
+		tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch, 
+		tbl_ts.CustomerID, tbl_ts.CustomerName,
+		e.Description, e.Step_ID
+	FROM
+		tbl_transaksiPRD cte
+		INNER JOIN tbl_transaksi tbl_ts
+			ON tbl_ts.MaterialCode = cte.RM_MaterialCode AND tbl_ts.Batch = cte.RM_Batch
+      INNER JOIN mstr_step e 
+			ON e.Step_ID = tbl_ts.Step_ID
+)
+SELECT * FROM tbl_transaksiINB
+UNION
+SELECT * FROM tbl_transaksiPRD
+ORDER BY Step_ID ASC
