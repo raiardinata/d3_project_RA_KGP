@@ -537,7 +537,7 @@ function generateDynamicTable(rawArray, Step_ID) {
                                     addSheet(xlsx, '#Step_300.display', 'Traceability System Home', 'Production', '3');
                                   break;
                                 case 4:
-                                    addSheet(xlsx, '#Step_400.display', 'Traceability System Home', 'Outbond', '4');
+                                    addSheet(xlsx, '#Step_400.display', 'Traceability System Home', 'Outbound', '4');
                             }
                          });
                     }
