@@ -100,7 +100,7 @@
                 <tr>
                     <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Material Code</label>
-                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" value="114000008" style="width: 150px;">
+                        <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" style="width: 150px;">
                         <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
                     </td>
                     <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
@@ -114,7 +114,7 @@
                 <tr>
                     <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Batch</label>
-                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" value="CS1200813" style="width: 150px;">
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
                         <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>
