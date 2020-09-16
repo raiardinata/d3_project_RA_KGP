@@ -1,9 +1,9 @@
 <?php
 include 'db_conn.php';
-// $matcd = $_POST['mtcd'];
-// $batch = $_POST['batc'];
-$matcd = '8994016003525';
-$batch = '0207MC02';
+$matcd = $_POST['mtcd'];
+$batch = $_POST['batc'];
+// $matcd = '8994016003525';
+// $batch = '0207MC02';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -21,8 +21,10 @@ function loop_nodes($a, $b, $c)
             SELECT 
                 UUID, `Key`,
                 MaterialCode, MaterialDescription, 
-                Batch, RM_MaterialCode, 
-                RM_MaterialDescription, RM_Batch, 
+                Batch, Quantity, 
+                    UoM, RM_MaterialCode, 
+                RM_MaterialDescription, RM_Batch,
+                RM_Quantity, RM_UoM, 
                 CustomerID, CustomerName,
                 ShiptoID, ShiptoName,
                 b.Description, b.Step_ID
@@ -36,8 +38,10 @@ function loop_nodes($a, $b, $c)
             SELECT 
                 tbl_ts.UUID, tbl_ts.`Key`,
                 tbl_ts.MaterialCode, tbl_ts.MaterialDescription, 
-                tbl_ts.Batch, tbl_ts.RM_MaterialCode, 
-                tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch, 
+                tbl_ts.Batch, tbl_ts.Quantity, 
+                    tbl_ts.UoM, tbl_ts.RM_MaterialCode, 
+                tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch,
+                tbl_ts.RM_Quantity, tbl_ts.RM_UoM, 
                 tbl_ts.CustomerID, tbl_ts.CustomerName,
                 tbl_ts.ShiptoID, tbl_ts.ShiptoName,
                 e.Description, e.Step_ID
@@ -51,8 +55,10 @@ function loop_nodes($a, $b, $c)
             SELECT 
                 UUID, `Key`,
                 MaterialCode, MaterialDescription, 
-                Batch, RM_MaterialCode, 
+                Batch, Quantity, 
+                    UoM, RM_MaterialCode, 
                 RM_MaterialDescription, RM_Batch, 
+                RM_Quantity, RM_UoM, 
                 CustomerID, CustomerName,
                 ShiptoID, ShiptoName,
                 b.Description, b.Step_ID
@@ -66,8 +72,10 @@ function loop_nodes($a, $b, $c)
             SELECT 
                 tbl_ts.UUID, tbl_ts.`Key`,
                 tbl_ts.MaterialCode, tbl_ts.MaterialDescription, 
-                tbl_ts.Batch, tbl_ts.RM_MaterialCode, 
+                tbl_ts.Batch, tbl_ts.Quantity, 
+                    tbl_ts.UoM, tbl_ts.RM_MaterialCode, 
                 tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch, 
+                tbl_ts.RM_Quantity, tbl_ts.RM_UoM, 
                 tbl_ts.CustomerID, tbl_ts.CustomerName,
                 tbl_ts.ShiptoID, tbl_ts.ShiptoName,
                 e.Description, e.Step_ID
@@ -88,25 +96,30 @@ function loop_nodes($a, $b, $c)
             SELECT 
                 tbl_ts.UUID, tbl_ts.`Key`,
                 tbl_ts.MaterialCode, tbl_ts.MaterialDescription, 
-                tbl_ts.Batch, tbl_ts.RM_MaterialCode, 
+                tbl_ts.Batch, tbl_ts.Quantity, 
+                    tbl_ts.UoM, tbl_ts.RM_MaterialCode, 
                 tbl_ts.RM_MaterialDescription, tbl_ts.RM_Batch, 
+                tbl_ts.RM_Quantity, tbl_ts.RM_UoM, 
                 tbl_ts.CustomerID, tbl_ts.CustomerName,
                 tbl_ts.ShiptoID, tbl_ts.ShiptoName,
                 e.Description, e.Step_ID
             FROM
                 tbl_transaksiINB cte
                 INNER JOIN tbl_transaksi tbl_ts
-                    ON tbl_ts.MaterialCode = cte.MaterialCode AND tbl_ts.Batch = cte.Batch AND tbl_ts.Step_ID = 400
+                    ON tbl_ts.MaterialCode = cte.MaterialCode AND tbl_ts.Batch = cte.Batch
             INNER JOIN mstr_step e 
                     ON e.Step_ID = tbl_ts.Step_ID
         )
-        SELECT * FROM tbl_transaksiBASE
-        UNION
-        SELECT * FROM tbl_transaksiPRD
-        UNION
-        SELECT * FROM tbl_transaksiINB
-        GROUP BY Step_ID
-        ORDER BY Step_ID ASC
+        SELECT final.*
+        FROM (
+			  SELECT * FROM tbl_transaksiBASE
+	        UNION
+	        SELECT * FROM tbl_transaksiPRD
+	        UNION
+	        SELECT * FROM tbl_transaksiINB
+	     ) AS final
+        GROUP BY final.Step_ID
+        ORDER BY final.Step_ID ASC
     ";
     $i = 0;
     $trans_res = mysqli_query($c, $trans_query);
@@ -121,6 +134,12 @@ function loop_nodes($a, $b, $c)
                         'material' => $row['MaterialDescription'],
                         'material_code' => $row['MaterialCode'],
                         'batch' => $row['Batch'],
+                        'uom' => $row['UoM'],
+                        'quantity' => $row['Quantity'],
+                        'rm_material_code' => $row['RM_MaterialCode'],
+                        'rm_batch' => $row['RM_Batch'],
+                        'rm_uom' => $row['RM_UoM'],
+                        'rm_quantity' => $row['RM_Quantity'],
                         'key' => $row['Key']
                     ]
                 ]
@@ -135,6 +154,12 @@ function loop_nodes($a, $b, $c)
                     'material' => $row['MaterialDescription'],
                     'material_code' => $row['MaterialCode'],
                     'batch' => $row['Batch'],
+                    'uom' => $row['UoM'],
+                    'quantity' => $row['Quantity'],
+                    'rm_material_code' => $row['RM_MaterialCode'],
+                    'rm_batch' => $row['RM_Batch'],
+                    'rm_uom' => $row['RM_UoM'],
+                    'rm_quantity' => $row['RM_Quantity'],
                     'key' => $row['Key']
                 ]
             );
@@ -146,51 +171,125 @@ function loop_nodes($a, $b, $c)
 
 $nodesArray = loop_nodes($matcd, $batch, $conn);
 $linkArray = [];
-function array_filter_recursive($input){
-    foreach ($input as &$value){
-        if (is_array($value)){
-            $value = array_filter_recursive($value);
-        }
-    }
-    return array_filter($input);
-}
-function unique_multidim_array($array, $key) {
-    $temp_array = array();
-    $i = 0;
-    $key_array = array();
-   
-    foreach($array as $val) {
-        if (!in_array($val[$key], $key_array)) {
-            $key_array[$i] = $val[$key];
-            array_push($temp_array, $val);
-        }
-        $i++;
-    }
-    return $temp_array;
-}
-// array_filter_recursive($resArray);
-// $details = unique_multidim_array($resArray,'UUID');
-// $resArray = array_unique($resArray, SORT_REGULAR);
+
 $n = 0;
-foreach($nodesArray as $nodes) {
+foreach($nodesArray as $nodes1) {
     // CREATE THE LINK
-    foreach($nodes as $nodes) {
+    foreach($nodes1 as $nodes) {
         // array search nodes make a link
-        // echo array_search("red",$nodesArray);
-    }
-}
-
-foreach($nodesArray as $index => $columns) {
-    foreach($columns as $key => $value) {
-        if ($key == 'Step_ID' && $value == '200') {
-            $filtered[] = $columns;
-            echo $filtered;
+        $key = false;
+        $search = [
+            'material_code' => $nodes['material_code'],
+            'batch' => $nodes['batch'],
+            'quantity' => $nodes['quantity'],
+            'uom' => $nodes['uom'],
+            'rm_material_code' => $nodes['rm_material_code'],
+            'rm_batch' => $nodes['rm_batch'],
+            'rm_quantity' => $nodes['rm_quantity'],
+            'rm_uom' => $nodes['rm_uom'],
+            'group' => $nodes['group']
+        ];
+        if($nodes['group'] == '100'){
+            foreach ($nodes1 as $k => $v) {
+                if (
+                    $v['group'] == '200'
+                ) {
+                    $key = $k;
+                    // key found - break the loop
+                    if(empty($linkArray)) {
+                        $linkArray = [
+                            'links' => [
+                                [
+                                    'source'=>$nodes['id'],
+                                    'target'=>$v['id'],
+                                    'step'=>$search['group'] . 'to' . $v['group'],
+                                    'value' => $n + 1
+                                ],
+                            ]
+                        ];
+                    }
+                    else {
+                        array_push($linkArray['links'], [
+                            'source'=>$nodes['id'],
+                            'target'=>$v['id'],
+                            'step'=>$search['group'] . 'to' . $v['group'],
+                            'value' => $n + 1
+                        ]);
+                    }
+                    break;
+                }
+            }
         }
+        else if($nodes['group'] == '200') {
+            foreach ($nodes1 as $k => $v) {
+                if (
+                    $v['group'] == '300'
+                ) {
+                    $key = $k;
+                    // key found - break the loop
+                    array_push($linkArray['links'], [
+                        'source'=>$nodes['id'],
+                        'target'=>$v['id'],
+                        'step'=>$search['group'] . 'to' . $v['group'],
+                        'value' => $n + 1
+                    ]);
+                    break;
+                }
+            }
+        }
+        else if($nodes['group'] == '300') {
+            foreach ($nodes1 as $k => $v) {
+                if (
+                    $v['group'] == '350'
+                ) {
+                    $key = $k;
+                    // key found - break the loop
+                    array_push($linkArray['links'], [
+                        'source'=>$nodes['id'],
+                        'target'=>$v['id'],
+                        'step'=>$search['group'] . 'to' . $v['group'],
+                        'value' => $n + 1
+                    ]);
+                    break;
+                }
+                else if(
+                    $v['group'] == '400'
+                ) {
+                    $key = $k;
+                    // key found - break the loop
+                    array_push($linkArray['links'], [
+                        'source'=>$nodes['id'],
+                        'target'=>$v['id'],
+                        'step'=>$search['group'] . 'to' . $v['group'],
+                        'value' => $n + 1
+                    ]);
+                    break;
+                }
+            }
+        }
+        else if($nodes['group'] == '350') {
+            foreach ($nodes1 as $k => $v) {
+                if (
+                    $v['group'] == '400'
+                ) {
+                    $key = $k;
+                    // key found - break the loop
+                    array_push($linkArray['links'], [
+                        'source'=>$nodes['id'],
+                        'target'=>$v['id'],
+                        'step'=>$search['group'] . 'to' . $v['group'],
+                        'value' => $n + 1
+                    ]);
+                    break;
+                }
+            }
+        }
+        $n++;
     }
 }
-
-$newArray = $nodesArray + $linkArray;
-// echo json_encode($nodesArray,JSON_PRETTY_PRINT);
+$jsonArray = [];
+$jsonArray = $nodesArray + $linkArray;
+echo json_encode($jsonArray,JSON_PRETTY_PRINT);
 
 mysqli_close($conn);
 

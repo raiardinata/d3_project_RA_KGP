@@ -3,9 +3,9 @@
     $uuid = $_POST['id'];
     $step = $_POST['Step_ID'];
     $alias = $_POST['Alias'];
-    // $uuid = '';
-    // $step = '100';
-    // $alias = 1;
+    // $uuid = '66f1f6f1-f266-11ea-8b1c-00155d7dcd02';
+    // $step = '350';
+    // $alias = 0;
 
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);

@@ -40,6 +40,7 @@ function generate_simulation() {
     var graphFull = JSON.parse(reqFullResult);
     if(!graphFull) {
         alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
+        return false;
     }
     graphFull.nodes.forEach(function (d, i) {
         tableArray.push( d );
@@ -47,8 +48,8 @@ function generate_simulation() {
 
     // A scale that gives a X target position for each group
     var x = d3.scaleOrdinal()
-        .domain([1, 2, 3, 4])
-        .range([50, 340, 640, 900]);
+        .domain([1, 2, 3, 4, 5])
+        .range([50, 340, 640, 940, 1240]);
 
     var labelLayout = d3.forceSimulation(label.nodes)
         .force("charge", d3.forceManyBody().strength(-1000))
@@ -245,6 +246,7 @@ function generate_simulation() {
 }
 
 function generateDynamicTable(rawArray, Step_ID) {
+    
     var graphTable = [];
     $('[id=\'' + Step_ID + '\']').remove();
     $('[id=\'' + Step_ID + '_wrapper\']').remove();
@@ -580,6 +582,9 @@ $('[id=\'btnSearch\']').on('click', function () {
     function generateArray300(array) {
         return array['group'] == 300;
     }
+    function generateArray350(array) {
+        return array['group'] == 350;
+    }
     function generateArray400(array) {
         return array['group'] == 400;
     }
@@ -589,6 +594,8 @@ $('[id=\'btnSearch\']').on('click', function () {
     generateDynamicTable(Step200, 'Step_200');
     var Step300 = tableArray.filter(generateArray300);
     generateDynamicTable(Step300, 'Step_300');
+    var Step350 = tableArray.filter(generateArray350);
+    generateDynamicTable(Step350, 'Step_350');
     var Step400 = tableArray.filter(generateArray400);
     generateDynamicTable(Step400, 'Step_400');
 });
