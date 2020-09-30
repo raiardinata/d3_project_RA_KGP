@@ -23,6 +23,8 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@zxing/library": "^0.17.1",
+    "babel": "^6.23.0",
     "d3": "^5.16.0",
     "d3-force": "^2.0.1",
     "jquery": "^3.5.1"

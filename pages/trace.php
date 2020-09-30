@@ -12,6 +12,9 @@
     <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
     <script src="../js/d3_v5.js" charset="utf-8"></script>
     <!--===============================================================================================-->
+    <!-- <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
+    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css"> -->
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <link rel="stylesheet" type="text/css" href="../css/DataTables/dataTables.bootstrap4.min.css">
@@ -36,6 +39,7 @@
     <script type="text/javascript" charset="utf8" src="../js/DataTables/vfs_fonts.js"></script>
     <script type="text/javascript" charset="utf8" src="../js/DataTables/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="../js/DataTables/buttons.print.min.js"></script>
+    <script type="module" charset="utf8" src="../js/DataTables/buttons.print.min.js"></script>
     <!--===============================================================================================-->
     <style>
         .flex-container {

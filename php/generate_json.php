@@ -13,9 +13,9 @@ if (!$conn) {
 }
 
 $nodesArray = [];
-function loop_nodes($a, $b, $c)
+$stepArray = [];
+function loop_nodes($a, $b, $c, &$stepArray)
 {
-    $link_array = [];
     $trans_query = "
         WITH RECURSIVE tbl_transaksiBASE AS(
             SELECT 
@@ -144,6 +144,9 @@ function loop_nodes($a, $b, $c)
                     ]
                 ]
             ];
+            $stepArray = [
+                $row['Step_ID']
+            ];
         }
         else {
             array_push($nodesArray['nodes'], 
@@ -163,13 +166,16 @@ function loop_nodes($a, $b, $c)
                     'key' => $row['Key']
                 ]
             );
+            array_push($stepArray,
+                $row['Step_ID']
+            );
         }
         $i++;
     }
     return $nodesArray;
 }
 
-$nodesArray = loop_nodes($matcd, $batch, $conn);
+$nodesArray = loop_nodes($matcd, $batch, $conn, $stepArray);
 $linkArray = [];
 
 $n = 0;
@@ -189,10 +195,10 @@ foreach($nodesArray as $nodes1) {
             'rm_uom' => $nodes['rm_uom'],
             'group' => $nodes['group']
         ];
-        if($nodes['group'] == '100'){
+        if($nodes['group'] == $stepArray[array_search($nodes['group'], $stepArray)]){
             foreach ($nodes1 as $k => $v) {
                 if (
-                    $v['group'] == '200'
+                    $v['group'] == $stepArray[array_search($nodes['group'], $stepArray)+1]
                 ) {
                     $key = $k;
                     // key found - break the loop
@@ -216,70 +222,6 @@ foreach($nodesArray as $nodes1) {
                             'value' => $n + 1
                         ]);
                     }
-                    break;
-                }
-            }
-        }
-        else if($nodes['group'] == '200') {
-            foreach ($nodes1 as $k => $v) {
-                if (
-                    $v['group'] == '300'
-                ) {
-                    $key = $k;
-                    // key found - break the loop
-                    array_push($linkArray['links'], [
-                        'source'=>$nodes['id'],
-                        'target'=>$v['id'],
-                        'step'=>$search['group'] . 'to' . $v['group'],
-                        'value' => $n + 1
-                    ]);
-                    break;
-                }
-            }
-        }
-        else if($nodes['group'] == '300') {
-            foreach ($nodes1 as $k => $v) {
-                if (
-                    $v['group'] == '350'
-                ) {
-                    $key = $k;
-                    // key found - break the loop
-                    array_push($linkArray['links'], [
-                        'source'=>$nodes['id'],
-                        'target'=>$v['id'],
-                        'step'=>$search['group'] . 'to' . $v['group'],
-                        'value' => $n + 1
-                    ]);
-                    break;
-                }
-                else if(
-                    $v['group'] == '400'
-                ) {
-                    $key = $k;
-                    // key found - break the loop
-                    array_push($linkArray['links'], [
-                        'source'=>$nodes['id'],
-                        'target'=>$v['id'],
-                        'step'=>$search['group'] . 'to' . $v['group'],
-                        'value' => $n + 1
-                    ]);
-                    break;
-                }
-            }
-        }
-        else if($nodes['group'] == '350') {
-            foreach ($nodes1 as $k => $v) {
-                if (
-                    $v['group'] == '400'
-                ) {
-                    $key = $k;
-                    // key found - break the loop
-                    array_push($linkArray['links'], [
-                        'source'=>$nodes['id'],
-                        'target'=>$v['id'],
-                        'step'=>$search['group'] . 'to' . $v['group'],
-                        'value' => $n + 1
-                    ]);
                     break;
                 }
             }

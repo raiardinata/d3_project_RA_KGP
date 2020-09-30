@@ -109,15 +109,17 @@ function loop_nodes($a, $b, $c)
                     ON tbl_ts.MaterialCode = cte.MaterialCode AND tbl_ts.Batch = cte.Batch
             INNER JOIN mstr_step e 
                     ON e.Step_ID = tbl_ts.Step_ID
-        ), tbl_transaksiUNION AS(
-	        SELECT * FROM tbl_transaksiBASE
+        )
+        SELECT final.*
+        FROM (
+			  SELECT * FROM tbl_transaksiBASE
 	        UNION
 	        SELECT * FROM tbl_transaksiPRD
 	        UNION
 	        SELECT * FROM tbl_transaksiINB
-        )
-        SELECT * FROM tbl_transaksiUNION
-        ORDER BY Step_ID ASC
+	     ) AS final
+        GROUP BY final.Step_ID
+        ORDER BY final.Step_ID ASC
     ";
     $i = 0;
     $trans_res = mysqli_query($c, $trans_query);
@@ -190,11 +192,7 @@ foreach($nodesArray as $nodes1) {
         if($nodes['group'] == '100'){
             foreach ($nodes1 as $k => $v) {
                 if (
-                    $v['material_code'] == $search['material_code']
-                    && $v['batch'] == $search['batch']
-                    && $v['quantity'] == $search['quantity']
-                    && $v['uom'] == $search['uom']
-                    && $v['group'] == '200'
+                    $v['group'] == '200'
                 ) {
                     $key = $k;
                     // key found - break the loop
@@ -225,11 +223,7 @@ foreach($nodesArray as $nodes1) {
         else if($nodes['group'] == '200') {
             foreach ($nodes1 as $k => $v) {
                 if (
-                    $v['rm_material_code'] == $search['material_code']
-                    && $v['rm_batch'] == $search['batch']
-                    && $v['rm_quantity'] == $search['quantity']
-                    && $v['rm_uom'] == $search['uom']
-                    && $v['group'] == '300'
+                    $v['group'] == '300'
                 ) {
                     $key = $k;
                     // key found - break the loop
@@ -246,10 +240,7 @@ foreach($nodesArray as $nodes1) {
         else if($nodes['group'] == '300') {
             foreach ($nodes1 as $k => $v) {
                 if (
-                    $v['material_code'] == $search['material_code']
-                    && $v['batch'] == $search['batch']
-                    && $v['uom'] == $search['uom']
-                    && $v['group'] == '350'
+                    $v['group'] == '350'
                 ) {
                     $key = $k;
                     // key found - break the loop
@@ -262,10 +253,7 @@ foreach($nodesArray as $nodes1) {
                     break;
                 }
                 else if(
-                    $v['material_code'] == $search['material_code']
-                    && $v['batch'] == $search['batch']
-                    && $v['uom'] == $search['uom']
-                    && $v['group'] == '400'
+                    $v['group'] == '400'
                 ) {
                     $key = $k;
                     // key found - break the loop
@@ -282,10 +270,7 @@ foreach($nodesArray as $nodes1) {
         else if($nodes['group'] == '350') {
             foreach ($nodes1 as $k => $v) {
                 if (
-                    $v['material_code'] == $search['material_code']
-                    && $v['batch'] == $search['batch']
-                    && $v['uom'] == $search['uom']
-                    && $v['group'] == '400'
+                    $v['group'] == '400'
                 ) {
                     $key = $k;
                     // key found - break the loop

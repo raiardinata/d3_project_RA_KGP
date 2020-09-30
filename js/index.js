@@ -1,5 +1,3 @@
-// import { select, json, scaleOrdinal, forceSimulation, forceManyBody, forceLink, forceCenter, forceX, forceY } from 'd3';
-
 var width = $("[id='viz']").width();
 var height = $("[id='viz']").height();
 var color = d3.scaleOrdinal(d3.schemeTableau10);
@@ -15,8 +13,11 @@ function generate_simulation() {
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
     var graph = JSON.parse(reqResult);
-    if(graph.nodes.length == 0) {
+    debugger;
+    if(typeof(graph) == 'undefined' || graph == null) {
         alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
+        $('[class=\'dt-buttons\']').remove();
+        $('[class=\'dataTables_wrapper dt-bootstrap4 no-footer\']').remove();
         return false;
     }
     
@@ -24,7 +25,6 @@ function generate_simulation() {
         'nodes': [],
         'links': []
     };
-
     graph.nodes.forEach(function (d, i) {
         label.nodes.push({ node: d });
         label.nodes.push({ node: d });
@@ -231,7 +231,7 @@ function generate_simulation() {
     prdInfoRess = JSON.parse(prdInfoRess);
     $('#lblMtcd').html( function() {
         if(prdInfoRess.description != null) {
-            return prdInfoRess.materialCode + ' - ' + prdInfoRess.description;
+            return prdInfoRess.description;
         }
         else {
             return prdInfoRess.materialCode;
@@ -519,6 +519,14 @@ function generateDynamicTable(rawArray, Step_ID) {
             dom: '<f<t>ip><l>'
         });
         
+        var d = new Date();
+
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+
+        var output = d.getFullYear() +
+            (month<10 ? '0' : '') + month +
+            (day<10 ? '0' : '') + day;
         $('#excelButton').parent().remove();
         var buttons = new $.fn.dataTable.Buttons(table, {
             buttons: [
@@ -526,6 +534,9 @@ function generateDynamicTable(rawArray, Step_ID) {
                     extend: 'excelHtml5',
                     text: 'Export to Excel',
                     attr: { id: 'excelButton' },
+                    title: function() {
+                        return 'TraceabilitySystem_'+$('#inputMaterialcode').val()+'_'+$('#inputBatch').val()+'_'+output;
+                    },
                     customize: function( xlsx ) {
                         setSheetName(xlsx, 'Inbound');
                         var i = 1;
@@ -533,13 +544,38 @@ function generateDynamicTable(rawArray, Step_ID) {
                             i++;
                             switch(i) {
                                 case 2:
-                                    addSheet(xlsx, '#Step_200.display', 'Traceability System Home', 'Transfer', '2');
+                                    addSheet(
+                                        xlsx,
+                                        '#Step_200.display',
+                                        'TraceabilitySystem_'+$('#inputMaterialcode').val()+'_'+$('#inputBatch').val()+'_'+output,
+                                        'Transfer',
+                                        '2'
+                                    );
                                     break;
                                 case 3:
-                                    addSheet(xlsx, '#Step_300.display', 'Traceability System Home', 'Production', '3');
+                                    addSheet(
+                                        xlsx, 
+                                        '#Step_300.display', 
+                                        'TraceabilitySystem_'+$('#inputMaterialcode').val()+'_'+$('#inputBatch').val()+'_'+output,
+                                        'Production', 
+                                        '3');
                                   break;
                                 case 4:
-                                    addSheet(xlsx, '#Step_400.display', 'Traceability System Home', 'Outbound', '4');
+                                    addSheet(
+                                        xlsx, 
+                                        '#Step_350.display', 
+                                        'TraceabilitySystem_'+$('#inputMaterialcode').val()+'_'+$('#inputBatch').val()+'_'+output,
+                                        'Transfer FG', 
+                                        '4');
+                                  break;
+                                case 5:
+                                    addSheet(
+                                        xlsx, 
+                                        '#Step_400.display', 
+                                        'TraceabilitySystem_'+$('#inputMaterialcode').val()+'_'+$('#inputBatch').val()+'_'+output,
+                                        'Outbound', 
+                                        '5');
+                                  break;
                             }
                          });
                     }
@@ -588,8 +624,6 @@ $('[id=\'btnSearch\']').on('click', function () {
     function generateArray400(array) {
         return array['group'] == 400;
     }
-    var Step100 = tableArray.filter(generateArray100);
-    generateDynamicTable(Step100, 'Step_100');
     var Step200 = tableArray.filter(generateArray200);
     generateDynamicTable(Step200, 'Step_200');
     var Step300 = tableArray.filter(generateArray300);
@@ -598,4 +632,7 @@ $('[id=\'btnSearch\']').on('click', function () {
     generateDynamicTable(Step350, 'Step_350');
     var Step400 = tableArray.filter(generateArray400);
     generateDynamicTable(Step400, 'Step_400');
+    var Step100 = tableArray.filter(generateArray100);
+    generateDynamicTable(Step100, 'Step_100');
+    $("#Step_100_wrapper").prependTo("#font");
 });
