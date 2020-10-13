@@ -40,7 +40,7 @@
     if($alias == 0) {
         // push data by step
         $field_query = "
-            SELECT GROUP_CONCAT(Filed) as Field FROM mstr_query WHERE Step_ID = '$step' ORDER BY Seq_No
+            SELECT GROUP_CONCAT(Filed ORDER BY Seq_No ASC) as Field FROM mstr_query WHERE Step_ID = '$step' ORDER BY Seq_No
         ";
         $field_res = mysqli_query($conn, $field_query);
         $field_row = mysqli_fetch_assoc($field_res);
@@ -62,7 +62,7 @@
 
     if($alias == true) {
         $alias_query = "
-            SELECT Alias as Alias FROM mstr_query WHERE Step_ID = '$step'
+            SELECT Alias as Alias FROM mstr_query WHERE Step_ID = '$step' ORDER BY Seq_No
         ";
         $alias_res = mysqli_query($conn, $alias_query);
         while($alias_row = mysqli_fetch_assoc($alias_res)) {

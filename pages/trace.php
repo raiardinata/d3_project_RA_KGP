@@ -8,7 +8,7 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="../js/all.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="../js/all.min.js" crossorigin="anonymous"></script> -->
     <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
     <script src="../js/d3_v5.js" charset="utf-8"></script>
     <!--===============================================================================================-->
@@ -19,6 +19,9 @@
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <link rel="stylesheet" type="text/css" href="../css/DataTables/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../css/DataTables/buttons.dataTables.min.css">
+    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null"
+        href="../css/milligram.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <script>
         $(document).ready(function(){
@@ -75,6 +78,19 @@
         .node text {
             font: 8px sans-serif;
         }
+        .Blink {
+            animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+        }.BlinkL {
+            animation: blinkerl 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+        }
+        @keyframes blinker {  
+            from { opacity: 1; }
+            to { opacity: 0.3; }
+        }
+        @keyframes blinkerl {  
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 
@@ -101,6 +117,31 @@
     <header class="masthead bg-primary text-white text-center" style="background-color: white; padding: 0px">
         <div style="width: 100%; height: 100%;">
             <table width="100%" height="20%">
+                <tr>
+                    <main class="wrapper" style="padding-top:2em">
+
+                        <section class="container" id="demo-content">
+                            <div>
+                                <button type="submit" id="startButton"><i class="fa fa-camera fa-lg"></i></button>
+                                <button type="submit" id="resetButton"><i class="fa fa-refresh fa-lg"></i></button>
+                            </div>
+
+                            <div>
+                                <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+                            </div>
+
+                            <div id="sourceSelectPanel" style="display:none">
+                                <label for="sourceSelect" style="color: #5f5f5f;">Change video source:</label>
+                                <select id="sourceSelect" style="max-width:400px">
+                                </select>
+                            </div>
+
+                            <label style="color: #5f5f5f; float: left;">Result:</label>
+                            <pre><code id="result"></code></pre>
+                        </section>
+
+                    </main>
+                </tr>
                 <tr>
                     <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 150px; color: #5F5F60">Material Code</label>
@@ -134,7 +175,7 @@
                     <svg id="viz" width="100%" height="200px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
                     <script src="../js/index.js"></script>
                 </div>
-                <div id="button" style="padding-left: 35px;"></div>
+                <div id="button" style="padding-left: 25px;"></div>
                 <!-- Detail panel-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%; min-width: 100%; padding-right: 0px; min-height: 400px;">
                     <div id="detailTable" style="min-width: 100%; height: 500px; overflow: scroll; padding-left: 10px;">
@@ -185,6 +226,60 @@
     <script src="../assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="../js/scripts.js"></script>
+    
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            let selectedDeviceId;
+            const codeReader = new ZXing.BrowserMultiFormatReader()
+            console.log('ZXing code reader initialized')
+            codeReader.listVideoInputDevices()
+            .then((videoInputDevices) => {
+                const sourceSelect = document.getElementById('sourceSelect')
+                selectedDeviceId = videoInputDevices[0].deviceId
+                if (videoInputDevices.length >= 1) {
+                    videoInputDevices.forEach((element) => {
+                        const sourceOption = document.createElement('option')
+                        sourceOption.text = element.label
+                        sourceOption.value = element.deviceId
+                        sourceSelect.appendChild(sourceOption)
+                    })
+
+                    sourceSelect.onchange = () => {
+                        selectedDeviceId = sourceSelect.value;
+                    };
+
+                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                    sourceSelectPanel.style.display = 'block'
+                }
+
+                document.getElementById('startButton').addEventListener('click', () => {
+                    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+                        if (result) {
+                            console.log(result)
+                            document.getElementById('result').textContent = result.text
+                        }
+                        if (err && !(err instanceof ZXing.NotFoundException)) {
+                            console.error(err)
+                            document.getElementById('result').textContent = err
+                        }
+                    })
+                    console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+                })
+
+                document.getElementById('resetButton').addEventListener('click', () => {
+                    codeReader.reset()
+                    document.getElementById('result').textContent = '';
+                    console.log('Reset.')
+                })
+
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+        })
+    </script>
+
 </body>
 
 </html>

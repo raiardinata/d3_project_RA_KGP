@@ -13,7 +13,7 @@ function generate_simulation() {
     jQuery.extend({ getValues: function (url) { var result = null; $.ajax({ url: url, type: 'post', dataType: 'text', data: { mtcd: mtcd, batc: batc }, async: false, success: function (data) { result = data; } }); return result; } });
     reqResult = $.getValues(base_url + '/KGP_Test/d3_prototype/php/generate_json.php');
     var graph = JSON.parse(reqResult);
-    debugger;
+    
     if(typeof(graph) == 'undefined' || graph == null) {
         alert('There is no data feedback with Material Code ' + mtcd + ' and Batch ' + batc + '');
         $('[class=\'dt-buttons\']').remove();
@@ -97,15 +97,32 @@ function generate_simulation() {
         .enter()
         .append("line")
         .attr("stroke", "#aaa")
-        .attr("stroke-width", "3px");
+        .attr("stroke-width", "3px")
+        .attr("class", function (d) {
+            if(d.source.material_code == $('#inputMaterialcode').val() && d.source.batch == $('#inputBatch').val()) {
+                return "BlinkL"
+            }
+        });
 
     var node = container.append("g").attr("class", "nodes")
         .selectAll("g")
         .data(graph.nodes)
         .enter()
         .append("circle")
-        .attr("r", 20)
+        .attr("r", function (d) { 
+            if(d.material_code == $('#inputMaterialcode').val() && d.batch == $('#inputBatch').val()) {
+                return 30;
+            }
+            else {
+                return 20;
+            }
+        })
         .attr("fill", function (d) { return color(d.group); })
+        .attr("class", function (d) { 
+            if(d.material_code == $('#inputMaterialcode').val() && d.batch == $('#inputBatch').val()) {
+                return "Blink"
+            }
+        });
 
     node.on("mouseover", focus).on("mouseout", unfocus);
 
@@ -262,7 +279,7 @@ function generateDynamicTable(rawArray, Step_ID) {
     var graphLength = graphTable.length;
     var h4 = document.createElement('H4');
     h4.setAttribute('id', Step_ID);
-    h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +'; display: inline; float: left;');//color(d.group)
+    h4.setAttribute('style', 'color:'+ color(Step_ID.substring(5)) +'; display: inline; float: left; margin-bottom: 0;');//color(d.group)
 
 
     if (graphLength > 0) {
