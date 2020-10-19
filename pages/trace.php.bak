@@ -126,7 +126,7 @@
                 <main class="wrapper" style="padding-top:0.5em;">
                 <section class="container" id="demo-content">
                     <div>
-                    <button type="submit" id="stopButton"><i class="fa fa-stop fa-lg"></i></button>
+                    <button type="submit" id="startButton"><i class="fa fa-camera fa-lg"></i></button>
                     <button type="submit" id="resetButton"><i class="fa fa-refresh fa-lg"></i></button>
                     </div>
                     <div>
@@ -154,22 +154,25 @@
         <div style="width: 100%; height: 100%;">
             <table width="100%" height="20%">
                 <tr>
-                    <td style="text-align: left; width: 22%; padding-left: 20px">
+                    <td style="text-align: left; padding-left: 50px; width: 50%;">
                         <label style="width: 110px; color: #5F5F60">Material Code</label>
                         <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" style="width: 150px;">
-                        <label style="width: 110px; color: #5F5F60">Batch</label>
-                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
+                        <button type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
+                        <button class='userinfo'><i class="fa fa-camera"></i></button>
                     </td>
-                    <td style="text-align: left; width: 25%;">
-                        <button type="submit" id="btnSearch" style="padding: 0px 15px 0px 15px;"><i class="fa fa-search"></i></button>
-                        <button class='userinfo' style="padding: 0px 15px 0px 15px;"><i class="fa fa-camera"></i></button>
-                    </td>
-                    <td rowspan="2" style="text-align: left; border: solid; width: 25%;">
+                    <td rowspan="2" style="text-align: left; width: 25%; border: solid;">
                         <label style="width: auto; color: #5F5F60" id="lblMtcd" style="white-space: nowrap;"></label><br/>
                         <label style="width: auto; color: #5F5F60" id="lblDesc" style="white-space: nowrap;"></label>
                     </td>
-                    <td id=imageColumn rowspan="2" style="text-align: left; border: solid; width: 25%;">
+                    <td id=imageColumn rowspan="2" style="text-align: left; width: 25%; border: solid;">
                         
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-left: 50px; width: 50%;">
+                        <label style="width: 110px; color: #5F5F60">Batch</label>
+                        <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
+                        <button type="submit" id="dummy" style="visibility: hidden;"><i class="fa fa-search"></i></button>
                     </td>
                 </tr>
             </table>
@@ -238,81 +241,70 @@
 
 </body>
 
-
-    <script type="text/javascript" src="https://unpkg.com/@zxing/library@0.17.1/umd/index.min.js"></script>
-    <script type="text/javascript">
-        window.addEventListener('load', function () {
-            let selectedDeviceId;
-            const codeReader = new ZXing.BrowserMultiFormatReader();
-            console.log('ZXing code reader initialized');
-            codeReader.listVideoInputDevices()
-            .then((videoInputDevices) => {
-                const sourceSelect = document.getElementById('sourceSelect');
-                selectedDeviceId = videoInputDevices[0].deviceId;
-                if (videoInputDevices.length >= 1) {
-                    videoInputDevices.forEach((element) => {
-                        const sourceOption = document.createElement('option');
-                        sourceOption.text = element.label;
-                        sourceOption.value = element.deviceId;
-                        sourceSelect.appendChild(sourceOption);
-                    })
-                    sourceSelect.onchange = () => {
-                        selectedDeviceId = sourceSelect.value;
-                    };
-                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
-                    sourceSelectPanel.style.display = 'block'
-                }
-                function renderCamera() {
-                    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-                        if (result) {
-                            console.log(result);
-                            document.getElementById('result').textContent = result.text;
-                            $('#inputMaterialcode').val(result.text);
-                        }
-                        if (err && !(err instanceof ZXing.NotFoundException)) {
-                            console.error(err)
-                            document.getElementById('result').textContent = err
-                        }
-                    })
-                    console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
-                }
-                function stopCamera() {
-                    codeReader.reset();
-                    document.getElementById('result').textContent = '';
-                    console.log('Reset.');
-                }
-                document.getElementById('stopButton').addEventListener('click', () => {
-                    stopCamera();
-                });
-                $('.userinfo').click(function(){
-                    // Display Modal
-                    $('#empModal').modal('show');
-                    renderCamera();
-                });
-                document.getElementById('resetButton').addEventListener('click', () => {
-                    $("#sourceSelect > option:selected")
-                    .prop("selected", false)
-                    .next()
-                    .prop("selected", true);
-                    selectedDeviceId = sourceSelect.value;
-                    stopCamera();
-                    renderCamera();
-                });
-                setInterval(function(){
-                    stopCamera();
-                }, 300 * 1000);
-            })
-            .catch((err) => {
-                console.error(err)
-            })
+<script>
+    $(document).ready(function(){
+      $('.userinfo').click(function(){
+        var userid = $(this).data('id');
+        // Display Modal
+        $('#empModal').modal('show'); 
+      });
+      $('#action').click(function() {
+        $('#inputMaterialcode').val($('#result').text());
+      });
+    });
+  </script>
+  <script type="text/javascript" src="https://unpkg.com/@zxing/library@0.17.1/umd/index.min.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', function () {
+      setInterval(function(){
+        codeReader.reset();
+        document.getElementById('result').textContent = '';
+        console.log('Reset.');
+      }, 300 * 1000);
+      let selectedDeviceId;
+      const codeReader = new ZXing.BrowserMultiFormatReader();
+      console.log('ZXing code reader initialized');
+      codeReader.listVideoInputDevices()
+      .then((videoInputDevices) => {
+        const sourceSelect = document.getElementById('sourceSelect');
+        selectedDeviceId = videoInputDevices[0].deviceId;
+        if (videoInputDevices.length >= 1) {
+          videoInputDevices.forEach((element) => {
+            const sourceOption = document.createElement('option');
+            sourceOption.text = element.label;
+            sourceOption.value = element.deviceId;
+            sourceSelect.appendChild(sourceOption);
+          })
+          sourceSelect.onchange = () => {
+            selectedDeviceId = sourceSelect.value;
+          };
+          const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+          sourceSelectPanel.style.display = 'block'
+        }
+        document.getElementById('startButton').addEventListener('click', () => {
+          codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+            if (result) {
+              console.log(result);
+              document.getElementById('result').textContent = result.text;
+              $('#inputMaterialcode').val(result.text);
+            }
+            if (err && !(err instanceof ZXing.NotFoundException)) {
+              console.error(err)
+              document.getElementById('result').textContent = err
+            }
+          })
+          console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
         })
-    </script>
-    <script>
-        $(document).ready(function(){
-            $('#action').click(function() {
-                $('#inputMaterialcode').val($('#result').text());
-            });
-        });
-    </script>
+        document.getElementById('resetButton').addEventListener('click', () => {
+          codeReader.reset()
+          document.getElementById('result').textContent = '';
+          console.log('Reset.')
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    })
+</script>
 
 </html>
