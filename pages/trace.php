@@ -268,6 +268,8 @@
                             console.log(result);
                             document.getElementById('result').textContent = result.text;
                             $('#inputMaterialcode').val(result.text);
+                            stopCamera();
+                            $('#empModal').modal('toggle');
                         }
                         if (err && !(err instanceof ZXing.NotFoundException)) {
                             console.error(err)
@@ -301,6 +303,9 @@
                 setInterval(function(){
                     stopCamera();
                 }, 300 * 1000);
+                $('#empModal').on('hidden.bs.modal', function () {
+                    stopCamera();
+                });
             })
             .catch((err) => {
                 console.error(err)
