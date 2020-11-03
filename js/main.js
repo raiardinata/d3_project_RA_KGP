@@ -38,20 +38,26 @@
             success: function (jsonData) {
                 var jsonData = JSON.parse(jsonData);
                 var check = true;
-
+                debugger;
+                if(jsonData.count > 100) {
+                    alert('You cant continue to login into the system. The System already had 100 online user. To increase the cappacity of the user, please contact you system administrator.');
+                }
+                else {
+                    if (jsonData.checkID == true) {
+                        // Simulate an HTTP redirect:
+                        sessionStorage.setItem("username", jsonData.username);
+                        sessionStorage.setItem("sessionid", jsonData.sessionID);
+                        window.location.replace(base_url + "/KGP_Test/d3_prototype/pages/home.php");
+                    }
+                    else {
+                        alert('Wrong username and password!');
+                    }
+                }
                 for (var i = 0; i < input.length; i++) {
                     if (validate(input[i]) == false) {
                         showValidate(input[i]);
                         check = false;
                     }
-                }
-                if (jsonData.checkID == true) {
-                    // Simulate an HTTP redirect:
-                    sessionStorage.setItem("username", jsonData.username);
-                    window.location.replace(base_url + "/KGP_Test/d3_prototype/pages/home.php");
-                }
-                else {
-                    alert('Wrong username and password!');
                 }
             }
         });

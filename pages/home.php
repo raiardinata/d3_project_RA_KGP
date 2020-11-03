@@ -20,11 +20,31 @@
         $(document).ready(function(){
             var base_url = window.origin;
             document.getElementById("username").innerHTML = "Hello, " + sessionStorage.getItem("username");
-
             $('#signout').click(function (e) {
                 sessionStorage.clear();
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
+            setInterval( function() {
+                debugger;
+                $.ajax({
+                    url: base_url + "/KGP_Test/d3_prototype/php/acl_model.php",
+                    async: false,
+                    type: 'post',
+                    dataType: 'text',
+                    data: {
+                        id: sessionStorage.getItem("sessionid")
+                    },
+                    success: function (jsonData) {
+                        var jsonData = JSON.parse(jsonData);
+                        debugger;
+                        if(jsonData.access != true) {
+                            alert('Session function are not working properly. Please re-login. If this error happen continously please contact your system administrator for more info!');
+                            sessionStorage.clear();
+                            window.location.replace(base_url + "/KGP_Test/d3_prototype/");
+                        }
+                    }
+                });
+            }, 60 * 1000);
         });        
     </script>
     <!--===============================================================================================-->
