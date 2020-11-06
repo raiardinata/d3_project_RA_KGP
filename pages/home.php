@@ -8,14 +8,15 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="../images/icons/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="../js/all.min.js" crossorigin="anonymous"></script> -->
+    <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../css/animated-menu.css">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null"
         href="../css/milligram.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <script src="../vendor/jquery/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
             var base_url = window.origin;
@@ -25,7 +26,6 @@
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
             setInterval( function() {
-                debugger;
                 $.ajax({
                     url: base_url + "/KGP_Test/d3_prototype/php/acl_model.php",
                     async: false,
@@ -36,7 +36,6 @@
                     },
                     success: function (jsonData) {
                         var jsonData = JSON.parse(jsonData);
-                        debugger;
                         if(jsonData.access != true) {
                             alert('Session function are not working properly. Please re-login. If this error happen continously please contact your system administrator for more info!');
                             sessionStorage.clear();
@@ -45,7 +44,7 @@
                     }
                 });
             }, 60 * 1000);
-        });        
+        });
     </script>
     <!--===============================================================================================-->
     <style>
@@ -74,9 +73,9 @@
 </head>
 
 <body id="page-top">
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #00be71;">
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #00be71; position: relative;">
         <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="color: #31a073;">Traceability System</a>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="color: #5f5f5f!important;">Menu <i class="fa fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><label class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" id="username" style="padding: 16px; color: #5f5f5f;"></label>
@@ -155,13 +154,12 @@
         </section>
     </footer>
 
-    
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
     <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
     <!-- Bootstrap core JS-->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../js/jquery.easing.min.js"></script>
     <!-- Contact form JS-->
     <script src="../assets/mail/jqBootstrapValidation.js"></script>
     <script src="../assets/mail/contact_me.js"></script>

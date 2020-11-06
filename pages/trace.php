@@ -27,12 +27,10 @@
         $(document).ready(function(){
             var base_url = window.origin;
             document.getElementById("username").innerHTML = "Hello, " + sessionStorage.getItem("username");
-
             $('#signout').click(function (e) {
                 sessionStorage.clear();
                 window.location.replace(base_url + "/KGP_Test/d3_prototype/");
             });
-
             setInterval( function() {
                 $.ajax({
                     url: base_url + "/KGP_Test/d3_prototype/php/acl_model.php",
@@ -117,7 +115,7 @@
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav" style="border-bottom: solid; border-bottom-color: #00be71; position: relative;">
         <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top" style="color: #31a073;">Traceability System</a>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="color: #5f5f5f!important;">Menu <i class="fas fa-bars"></i></button>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="color: #5f5f5f!important;">Menu <i class="fa fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><label class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#" id="username" style="padding: 16px; color: #5f5f5f;"></label>
@@ -174,21 +172,24 @@
         <div style="width: 100%; height: 100%;">
             <table width="100%" height="20%">
                 <tr>
-                    <td style="text-align: left; width: 22%; padding-left: 20px">
+                    <td style="text-align: left; width: 9%; padding-left: 20px">
                         <label style="width: 110px; color: #5F5F60">Material Code</label>
                         <input type="text" id="inputMaterialcode" name="fname" placeholder="Material Code" style="width: 150px;">
+                        <button id="btnSearch" style="padding: 0px 15px 0px 15px; width: 45px;"><i class="fa fa-search"></i></button>
+                        <br/>
                         <label style="width: 110px; color: #5F5F60">Batch</label>
                         <input type="text" id="inputBatch" name="fname" placeholder="Batch" style="width: 150px;">
+                        <button class='userinfo' style="padding: 0px 15px 0px 15px; width: 45px;"><i class="fa fa-camera"></i></button>
                     </td>
-                    <td style="text-align: left; width: 25%;">
+                    <!-- <td style="text-align: left; width: 15%;">
                         <button type="submit" id="btnSearch" style="padding: 0px 15px 0px 15px;"><i class="fa fa-search"></i></button>
                         <button class='userinfo' style="padding: 0px 15px 0px 15px;"><i class="fa fa-camera"></i></button>
-                    </td>
-                    <td rowspan="2" style="text-align: left; border: solid; width: 25%;">
+                    </td> -->
+                    <td rowspan="2" style="text-align: right; border: solid; width: 25%;">
                         <label style="width: auto; color: #5F5F60" id="lblMtcd" style="white-space: nowrap;"></label><br/>
                         <label style="width: auto; color: #5F5F60" id="lblDesc" style="white-space: nowrap;"></label>
                     </td>
-                    <td id=imageColumn rowspan="2" style="text-align: left; border: solid; width: 25%;">
+                    <td id=imageColumn rowspan="2" style="text-align: left; border: solid; width: 5%;">
                         
                     </td>
                 </tr>
@@ -255,7 +256,6 @@
     <script src="../assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="../js/scripts.js"></script>
-
 </body>
 
 
