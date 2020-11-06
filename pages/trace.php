@@ -189,7 +189,7 @@
                         <label style="width: auto; color: #5F5F60" id="lblMtcd" style="white-space: nowrap;"></label><br/>
                         <label style="width: auto; color: #5F5F60" id="lblDesc" style="white-space: nowrap;"></label>
                     </td>
-                    <td id=imageColumn rowspan="2" style="text-align: left; border: solid; width: 5%;">
+                    <td id=imageColumn rowspan="2" style="text-align: left; border: solid; width: 1%;">
                         
                     </td>
                 </tr>
@@ -198,8 +198,8 @@
     </header>
 
     <section>
-        <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; min-width: 100%;">
-            <div class="row" style="margin-right: 0px;">
+        <div class="container" style="padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; min-width: 100%; width: 100%;">
+            <div class="row" style="margin-right: 0px; width: 100%;">
                 <!-- Trace-->
                 <div class="col-lg-4 mb-5 mb-lg-0" style="flex:0 0 100%;min-width: 100%; padding-top: 10px; padding-bottom: 10px;">
                     <svg id="viz" width="100%" height="200px" style="background-image: url(../images/Backgroud_ind.png);"></svg>
